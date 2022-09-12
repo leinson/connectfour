@@ -6,6 +6,8 @@ authors = ["leinson <hannah.leinson@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
+pygame = "^2.1.2"
+numpy = "^1.23.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.3"
