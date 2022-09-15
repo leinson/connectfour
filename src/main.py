@@ -2,8 +2,13 @@ import numpy as np
 
 
 def create_the_board():
-    rows = 7
-    columns = 6
+    """Luo pelilaudan, eli nollilla alustettu "matriksi".
+
+    Returns:
+        np.zeros: nollilla alustettu numpy taulukko. 
+    """
+    rows = 6
+    columns = 7
 
     return np.zeros((rows,columns))
 
@@ -14,13 +19,27 @@ def whose_turn():
     pass
 
 def choose_column(column, matrix):
-    for i in matrix.T[column]:
-      print(i)
+    """Tarkastaa valittua saraketta alhaalta ylös, onko sarakkeessa vielä tilaa.
+    Jos on, sijoitetaan pelinappula siihen kohtaan.
 
-#Loop joka aloittaa alimmasta rivistä oikean sarakkeen kohdalta.
-#  if x=0: x=playerx. 
-# elif laskuri=sarake käyty läpi, return false. 
-# muuten jatkaa loop kunnes löytää paikan if lauseesta.
+    Args:
+        column (int): Sarake, jonka pelaaja on valinnut
+        matrix (np array): pelilauta
+
+    Returns:
+        boolean: True jos sarakkeessa tilaa, False jos sarake täynnä.
+    """
+    row_counter=5
+    for i in reversed(matrix.T[column]):
+        print(i)
+        if i==0:
+            matrix[row_counter][column]=1
+            print(matrix)
+            return True
+        row_counter-=1
+    return False
+
+# seuraavaksi vuoronvaihto toteutus: 
 
 player1 = 1
 player2 = 2
@@ -29,4 +48,13 @@ player2 = 2
 
 board = create_the_board()
 
-choose_column(int(input("Valitse sarake 0-6: ")), board)
+while True:
+    """Alkuvaiheen pelisilmukka. Valitaan sarake, jatketaan tai päätetään peli.
+    """
+    
+    insert_chip = choose_column(int(input("Valitse sarake 0-6: ")), board)
+    if insert_chip == False:
+        print("sarake täynnä, valitse toinen sarake.")
+    end_or_continue = input("jatka: enter, lopeta: n: ")
+    if end_or_continue == "n":
+        break
