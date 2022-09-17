@@ -12,7 +12,7 @@ hetkellä käyttöliittymänä, ja ainakin ohte-kurssilla ohjeistettiin jättäm
 
 Ohjelmani on päässyt alkuun, ja olen yrittänyt saada toteutettua tärkeimpiä toimintoja ennen kun hyppään pygamen ja tekoälyalgoritmin maailmaan.
 Ohjelma toimii tällä hetkellä komentorivillä, ja siinä pystyy pelaamaan tietokonetta vastaan joka valitsee satunnaisesti oman sarakkeen.
-Voittotarkistus toimii tällä hetkellä vain sarakkeiden suhteen. 
+Voittotarkistus toimii tällä hetkellä vain sarakkeiden suhteen. Olen hyödyntänyt docstringiä koodin kommentoimista varten.
 
 Vaikka onkin vielä hyvin alkeellinen, olen silti aika tyytyväinen siihen mitä olen
 saanut aikaiseksi, koska alkuun tuntui erittäin kankealta ja hankalalta edes tietää mistä aloittaa. Opin paremmin käsittelemään taulukkoja,
