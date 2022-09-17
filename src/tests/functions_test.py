@@ -23,9 +23,16 @@ class TestFunctions(unittest.TestCase):
     def test_choose_column_player_correctly(self):
         np.testing.assert_equal((5, 1), functions.choose_column(1, self.board))
 
+
+
+    def test_check_if_no_win_player(self):
+        self.assertFalse(functions.check_if_win(self.board,0,(3,0)))
+
+
 #    def test_ai_choose_column_correctly(self):
 #        pass
 #    def test_check_if_row_win(self):
 #        pass
 #    def test_check_if_column_win(self):
 #        pass
+

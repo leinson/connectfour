@@ -31,7 +31,7 @@ while True:
         print("tekoäly tekee siirron:")
         while True:
             insert_chip = functions.ai_choose_column(board)
-            if insert_chip == False:
+            if insert_chip is False:
                 print("sarake täynnä, tkoäly valitsee toisen sarakkeen.")
             else:
                 break

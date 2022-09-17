@@ -33,9 +33,9 @@ def choose_column(column, matrix):
 
 
 def ai_choose_column(matrix):
-    """ Ei vielä tekoälyä. Kokeilen ensin random-valinnalla, 
+    """ Ei vielä tekoälyä. Kokeilen ensin random-valinnalla,
         että saan muut pelin toiminnallisuudet pyörimään.
-        Valitsee random sarakkeen. Muuten toiminta sama kuin 
+        Valitsee random sarakkeen. Muuten toiminta sama kuin
         pelaajan funktiossa "choose_column".
     Args:
         matrix (np array): pelilauta
@@ -67,7 +67,7 @@ def check_if_win(matrix, turn, row_column):
     else:
         chip = 2
 
-    # rivi
+    # rivi ei toimi täytyy muokata
     counter = 0
     for i in matrix[row]:
         if i == chip:
@@ -77,7 +77,7 @@ def check_if_win(matrix, turn, row_column):
     if counter >= 4:
         return True
 
-    # sarake
+    # sarake toimii
     counter = 0
     for i in matrix.T[col]:
         if i == chip:
