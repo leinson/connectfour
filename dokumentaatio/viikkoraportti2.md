@@ -1,6 +1,5 @@
 ### Viikkoraportti 2
 
-Vastaa kirjoituksessa esimerkiksi seuraaviin kysymyksiin:
 
 **Tuntikirjanpito vko 2 : ~13h**
 
