@@ -1,7 +1,7 @@
 
 import functions
 
-"""Muutamien tärkeiden muuttujien alustus"""
+# Muutamien tärkeiden muuttujien alustus
 player = 0
 ai_player = 1
 turn = player
@@ -9,20 +9,22 @@ board = functions.create_the_board()
 
 while True:
     """ Alkuvaiheen pelisilmukka.
-        Vuoron omaava valitsee sarakkeen, jos on täynnä, valitsee uudelleen. Pelaaja voi päättää, jos jatketaan tai päätetään peli.
+        Vuoron omaava valitsee sarakkeen, jos on täynnä, valitsee uudelleen.
+        Pelaaja voi päättää, jos jatketaan tai päätetään peli.
         Vuoronvaihto pelaajan ja tekoälyn välillä.
     """
+
     print("Pelaaja = 1, tekoäly = 2")
     print("kenenvuoro:", turn)
     if turn == player:
         while True:
-            insert_chip = functions.choose_column(int(input("Valitse sarake 0-6: ")), board)
-            if insert_chip == False:
+            insert_chip = functions.choose_column(
+                int(input("Valitse sarake 0-6: ")), board)
+            if insert_chip is False:
                 print("sarake täynnä, valitse toinen sarake.")
             else:
                 break
-        
-        
+
     elif turn == ai_player:
         """Ei vielä tekoälyä, random valinta.
         """
@@ -35,12 +37,12 @@ while True:
                 break
     else:
         print("virhe vuoronvalinnassa")
-        break  
-    
+        break
+
     print(board)
-    print("row:", insert_chip[0],"\ncolumn:", insert_chip[1])
+    print("row:", insert_chip[0], "\ncolumn:", insert_chip[1])
     is_win = functions.check_if_win(board, turn, insert_chip)
-    if is_win == True:
+    if is_win is True:
         print("voitto!", turn)
         break
 
