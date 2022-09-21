@@ -67,27 +67,48 @@ def check_if_win(matrix, turn, row_column):
     else:
         chip = 2
 
-    # rivi ei toimi täytyy muokata
+    # rivi
     counter = 0
     for i in matrix[row]:
         if i == chip:
             counter += 1
         else:
             counter = 0
-    if counter >= 4:
-        return True
+        print("rivicounter:", counter)
+        if counter >= 4:
+            return True
 
-    # sarake toimii
+    # sarake
     counter = 0
     for i in matrix.T[col]:
         if i == chip:
             counter += 1
         else:
             counter = 0
-    if counter >= 4:
-        return True
+        print("sarakecounter:", counter)        
+        if counter >= 4:
+            return True
 
-    # horisontaaliset tekemättä
+
+    # horisontaaliset. Nyt käy kaikki vaihtoehdot läpi paitsi ne, mihin ei
+    # voi tulla voittoa. Jos keksin fiksun tavan vaan tarkistaa siirron diagonaalit
+    # muutan jatkossa sellaiseksi. 
+    rows=6
+    columns=7
+
+    # /-diagonaali
+    for i in range(columns-3):
+        for j in range(3, rows):
+            if matrix[j][i] == chip:
+                if matrix[j-1][i+1] == chip and matrix[j-2][i+2] == chip and matrix[j-3][i+3] == chip:
+                    return True
+
+    # \-diagonaali
+    for i in range(columns-3):
+        for j in range(rows-3):
+            if matrix[j][i] == chip:
+                if matrix[j+1][i+1] == chip and matrix[j+2][i+2] == chip and matrix[j+3][i+3] == chip:
+                    return True
 
     return False
 
