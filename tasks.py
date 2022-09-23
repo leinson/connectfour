@@ -7,6 +7,10 @@ def start(ctx):
     ctx.run("python3 src/index.py", pty=True)
 
 @task
+def ui(ctx):
+    ctx.run("python3 src/ui.py", pty=True)
+
+@task
 def test(ctx):
     ctx.run("pytest src", pty=True)
 
