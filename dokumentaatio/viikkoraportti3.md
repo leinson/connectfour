@@ -1,6 +1,6 @@
 ## Viikkoraportti 3
 
-**Tuntikirjanpito: ~8h**
+**Tuntikirjanpito: ~8,5h**
 
 Tällä viikolla olen saanut karkean visuaalisen pygame toteutuksen pelistä toimimaan. Siihen menikin suurin osa ajasta.  Sairastuminen rajoitti omaa aikaansaantikapasiteettia. 
 Toteutin myös viime viikolta
