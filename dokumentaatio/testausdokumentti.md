@@ -7,7 +7,11 @@ Ohjelmaa on testattu sekä manuaalisesti automatisoiduilla yksikkö- ja integraa
 Sovelluslogiikasta vastaava luokka on tällä hetkellä Functions, ja sillä on oma testiluokka TestFunctions.
 
 ### Testauskattavuus
-Testauksen haarautumakattavuus on tällä hetkellä 64%. Näet viikkottaiset testikattavuusraportit dokumentaatio-kansion alakansiosta testikattavuus.
+Testauksen haarautumakattavuus on tällä hetkellä 64%. 
+
+![](./testikattavuus/coverage_report_24_sept.png)
+
+Näet viikkottaiset testikattavuusraportit dokumentaatio-kansion alakansiosta testikattavuus.
 
 Käyttöliittymä on jätetty testikattavuuden ulkopuolelle. Käyttöliittymiä on tällä hetkellä kaksi: index.py toimii komentorivillä, ja ui.py pygamella graafisesti.
 
