@@ -2,7 +2,6 @@ from random import randint
 import numpy as np
 
 
-
 def create_the_board():
     """ Luo pelilaudan, eli nollilla alustettu "matriksi".
     Returns:
@@ -85,16 +84,15 @@ def check_if_win(matrix, turn, row_column):
             counter += 1
         else:
             counter = 0
-        print("sarakecounter:", counter)        
+        print("sarakecounter:", counter)
         if counter >= 4:
             return True
 
-
     # horisontaaliset. Nyt käy kaikki vaihtoehdot läpi paitsi ne, mihin ei
     # voi tulla voittoa. Jos keksin fiksun tavan vaan tarkistaa siirron diagonaalit
-    # muutan jatkossa sellaiseksi. 
-    rows=6
-    columns=7
+    # muutan jatkossa sellaiseksi.
+    rows = 6
+    columns = 7
 
     # /-diagonaali
     for i in range(columns-3):
