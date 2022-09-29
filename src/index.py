@@ -29,7 +29,12 @@ while True:
         """Ei vielä tekoälyä, random valinta.
         """
         print("tekoäly tekee siirron:")
-        while True:
+        column, minimax_value = functions.minimax(board, 3, True)
+        if board[0][column] == 0:
+            row = functions.next_empty_row(board,column)
+            board[row][column] = 2
+
+        while False:
             insert_chip = functions.ai_choose_column(board)
             if insert_chip is False:
                 print("sarake täynnä, tkoäly valitsee toisen sarakkeen.")

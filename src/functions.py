@@ -65,13 +65,16 @@ def check_if_win(matrix, turn, row_column):
         chip = 2
     rows = 6
     columns = 7
+
     #pidempi silmukka jos käydään minimax algoritmia, jolloin tarkka paikka
     #ei ole tiedossa
     if row_column == (-1,-1):
+        #rivi
         for i in range(columns-3):
             for j in range(rows):
                 if matrix[j][i] == chip and matrix[j][i+1] == chip and matrix[j][i+2] == chip and matrix[j][i+3] == chip:
                     return True
+        #sarake
         for i in range(columns):
             for j in range(rows-3):
                 if matrix[j][i] == chip and matrix[j+1][i] == chip and matrix[j+2][i] == chip and matrix[j+3][i] == chip:
@@ -103,9 +106,8 @@ def check_if_win(matrix, turn, row_column):
             if counter >= 4:
                 return True
 
-    # horisontaaliset. Käy kaikki vaihtoehdot läpi paitsi ne, mihin ei
+    # diagonaalit, Käy kaikki vaihtoehdot läpi paitsi ne, mihin ei
     # voi tulla voittoa. 
-
 
     # /-diagonaali
     for i in range(columns-3):
@@ -134,28 +136,79 @@ def change_turn(turn):
     return turn
 
 def get_possible_columns(board):
-    possible_moves = []
-    columns=7
-    last_row=0
+    """Tarkistaa ylimmän rivin, minkä sarakkeiden kohdalla on vielä tyhjää.
+    Args:
+        board (array): pelilauta
+    Returns:
+        list: listan mahdollisista sarakkeista.
+    """
+    possible_columns = []
+    columns = 7
+    last_row = 0
     for column in range(columns):
         if board[last_row][column] == 0:
-            possible_moves.append(column)
-    print(possible_moves)
-    return possible_moves
-
+            possible_columns.append(column)
+    #print("get possible columns:", possible_columns)
+    return possible_columns
 
 def check_if_terminal_node(board):
     """
-    Onko kyseessä lopputapaus, tarkistetaan onko voittoa todettavissa
-    pelaajalla tai ai:lla.
+    Onko kyseessä lopputapaus, Onko mahdollisia siirtoja jäljellä.
+    Tarkistetaan onko voittoa todettavissa pelaajalla tai ai:lla. 
     Args:
         board (array): pelilauta
     Returns:
         boolean: onko lopputapaus vai ei
     """
-    if check_if_win(board, 0, (-1,-1)) is True or check_if_win(board, 0, (-1,-1)) is True:
+    if len(get_possible_columns(board)) == 0:
+        return True
+    elif check_if_win(board, 0, (-1,-1)) is True or check_if_win(board, 0, (-1,-1)) is True:
         return True
     return False
+
+def heuristic_value(board, chip):
+    """Pisteet siirrosta:
+    4-connect = 1000
+    3-connect = 10
+    2-connect = 5
+    3-connect vastustaja = -5
+
+    Args:
+        board (_type_): _description_
+        chip (_type_): _description_
+    """
+    value = 0
+    #horisontaalinen 4-rivissä
+    columns=7
+    rows=6
+    for col in range(columns-3):
+        for row in range(rows):
+            if board[row][col] == chip and board[row][col+1] == chip and board[row][col+2] == chip:
+                    value += 10000
+                    print("value", value)
+                    
+    for col in range(columns-3):
+        for row in range(rows):
+            if board[row][col] == 1 and board[row][col+1] == 1 and board[row][col+2] == 1:
+                    value -= 10000
+                    print("value vastustaja", value)
+    return value
+
+def next_empty_row(board, column):
+    for row in range(5,-1,-1):
+        if board[row][column] == 0:
+            return row
+
+
+b=create_the_board()
+b[5][0]=1
+b[5][1]=1
+b[5][2]=1
+b[5][3]=1
+print(heuristic_value(b, 1))
+print(check_if_win(b, 0, (-1,-1)))
+print(b)
+print(next_empty_row(b, 5))
 
 def minimax(board, depth, maxplayer):
     """
@@ -171,31 +224,39 @@ def minimax(board, depth, maxplayer):
     Returns:
         tuple: sarake sekä minimax-arvo
     """
-    #function  minimax( node, depth, maximizingPlayer )
-    #return the heuristic value of node
-    possible_moves = get_possible_columns(board)
+
+    possible_columns = get_possible_columns(board)
     terminal_node = check_if_terminal_node(board)
-    if depth == 0 or terminal_node: 
+
+    if depth == 0 or terminal_node is True: 
         if terminal_node is True:
-            if check_if_win(board, 0, (-1,-1)):
-                return (None, -999999999999)
-            elif check_if_win(board, 1, (-1,-1)):
-                return (None, 999999999999)
-        else:
-            return #heuristic value, laskentaa
+            if check_if_win(board, 1, (-1,-1)):
+                return (None, -9999999999999)
+            elif check_if_win(board, 2, (-1,-1)):
+                return (None, 99999999999999)
+        else: #syvyys = 0
+            return None, heuristic_value(board, 2)
 
     if maxplayer:
-        value = -100000000000 #vaihda infinity
-        for move in possible_moves:
+        value = -1000000000000 #vaihda oikea infinity?
+        for move in possible_columns:
             copy_of_board = board.copy()
-            #sijoita nappula
-            value = max(value, minimax(move, depth-1, False))
+            empty_row = next_empty_row(copy_of_board, move)
+            copy_of_board[empty_row][move] == 2
+            #value = max(value, minimax(copy_of_board, depth-1, False))
+            minimax_value = minimax(copy_of_board, depth-1, False)
+            value = max(value, minimax_value[1])
         return move, value
 
     else: #miniplayer
-        value= +1000000000000
-        for move in possible_moves:
-            value = min(value, minimax(move, depth-1, True))
+        value= +10000000000000
+        for move in possible_columns:
+            copy_of_board = board.copy()
+            empty_row = next_empty_row(copy_of_board, move)
+            copy_of_board[empty_row][move] == 1
+            #value = min(value, minimax(copy_of_board, depth-1, True))
+            minimax_value = minimax(copy_of_board, depth-1, True)
+            value = min(value, minimax_value[1])
         return move, value
 
     #    for each child of node do
