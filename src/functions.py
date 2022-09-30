@@ -9,7 +9,6 @@ def create_the_board():
     """
     rows = 6
     columns = 7
-
     return np.zeros((rows, columns))
 
 
@@ -32,7 +31,8 @@ def choose_column(column, matrix):
 
 
 def ai_choose_column(matrix):
-    """ Ei vielä tekoälyä. Kokeilen ensin random-valinnalla,
+    """ POISTA kun minimax toimii.
+        Kokeilen ensin random-valinnalla,
         että saan muut pelin toiminnallisuudet pyörimään.
         Valitsee random sarakkeen. Muuten toiminta sama kuin
         pelaajan funktiossa "choose_column".
@@ -56,6 +56,7 @@ def check_if_win(matrix, turn, row_column):
     Args:
         matrix (array): pelilauta
         turn (int): kenen vuoro (0 tai 1)
+        row_column (tuple): valitun nappulan koordinaatit. Jos minimaxin kautta kutsu tähän metodiin, on arvo (-1,-1).
     Returns:
         boolean: True jos voitto löytynyt, muuten False
     """
@@ -65,9 +66,10 @@ def check_if_win(matrix, turn, row_column):
         chip = 2
     rows = 6
     columns = 7
+    row = row_column[0]
+    col = row_column[1]
 
-    #pidempi silmukka jos käydään minimax algoritmia, jolloin tarkka paikka
-    #ei ole tiedossa
+    #pidempi silmukka jos käydään minimax algoritmia, jolloin tarkka paikka ei ole tiedossa
     if row_column == (-1,-1):
         #rivi
         for i in range(columns-3):
@@ -79,11 +81,7 @@ def check_if_win(matrix, turn, row_column):
             for j in range(rows-3):
                 if matrix[j][i] == chip and matrix[j+1][i] == chip and matrix[j+2][i] == chip and matrix[j+3][i] == chip:
                     return True
-
-    else:    
-        row = row_column[0]
-        col = row_column[1]
-        
+    else:            
         # rivi
         counter = 0
         for i in matrix[row]:
@@ -94,7 +92,6 @@ def check_if_win(matrix, turn, row_column):
             print("rivicounter:", counter)
             if counter >= 4:
                 return True
-
         # sarake
         counter = 0
         for i in matrix.T[col]:
@@ -106,16 +103,13 @@ def check_if_win(matrix, turn, row_column):
             if counter >= 4:
                 return True
 
-    # diagonaalit, Käy kaikki vaihtoehdot läpi paitsi ne, mihin ei
-    # voi tulla voittoa. 
-
+    # diagonaalit, Käy kaikki vaihtoehdot läpi paitsi ne, mihin ei voi tulla voittoa. 
     # /-diagonaali
     for i in range(columns-3):
         for j in range(3, rows):
             if matrix[j][i] == chip:
                 if matrix[j-1][i+1] == chip and matrix[j-2][i+2] == chip and matrix[j-3][i+3] == chip:
                     return True
-
     # \-diagonaali
     for i in range(columns-3):
         for j in range(rows-3):
@@ -125,9 +119,9 @@ def check_if_win(matrix, turn, row_column):
 
     return False
 
-
 def change_turn(turn):
-    """ Vaihtaa vuoron pelaajan ja tekoälyn välillä parillisuuden perusteella.
+    """ 
+    Vaihtaa vuoron pelaajan ja tekoälyn välillä parillisuuden perusteella.
     Args:
         turn (int): pariton tai parillinen riippuen siitä, kumman vuoro on ollut.
     """
@@ -136,7 +130,8 @@ def change_turn(turn):
     return turn
 
 def get_possible_columns(board):
-    """Tarkistaa ylimmän rivin, minkä sarakkeiden kohdalla on vielä tyhjää.
+    """
+    Tarkistaa ylimmän rivin: minkä sarakkeiden kohdalla on vielä tyhjää, eli 0.
     Args:
         board (array): pelilauta
     Returns:
@@ -153,45 +148,53 @@ def get_possible_columns(board):
 
 def check_if_terminal_node(board):
     """
-    Onko kyseessä lopputapaus, Onko mahdollisia siirtoja jäljellä.
-    Tarkistetaan onko voittoa todettavissa pelaajalla tai ai:lla. 
+    Onko kyseessä lopputapaus, vai onko mahdollisia siirtoja jäljellä.
+    Tarkistetaan, onko voittoa todettavissa pelaajalla tai ai:lla. 
     Args:
         board (array): pelilauta
     Returns:
-        boolean: onko lopputapaus vai ei
+        boolean: onko lopputapaus / ei enää siirtomahdollisuuksia vai ei 
     """
     if len(get_possible_columns(board)) == 0:
         return True
-    elif check_if_win(board, 0, (-1,-1)) is True or check_if_win(board, 0, (-1,-1)) is True:
+    elif check_if_win(board, 1, (-1,-1)) is True:
+        return True
+    elif check_if_win(board, 2, (-1,-1)) is True:
         return True
     return False
 
 def heuristic_value(board, chip):
-    """Pisteet siirrosta:
-    4-connect = 1000
+    """Pisteet siirroista :
+    4-connect = 200
     3-connect = 10
     2-connect = 5
-    3-connect vastustaja = -5
-
+    3-connect vastustaja = -6
+    Käydään läpi eri vaihtoehdot saada pisteitä ja lasketaan yhteispisteet.
+    Erittäin keskeneräinen.
+    Pisteytykseen liittyen otettu ideaa tästä videosta: https://www.youtube.com/watch?v=y7AKtWGOPAE&t=0s
     Args:
-        board (_type_): _description_
-        chip (_type_): _description_
+        board (array): pelilauta
+        chip (int): pelinappula
+    Returns:
+        int: palauttaa kyseisen vaihtoehtoisen pelilaudan pisteet
     """
     value = 0
-    #horisontaalinen 4-rivissä
+    #horisontaalinen 3-rivissä
     columns=7
-    rows=6
+    rows=6 
+    others_chip = 1
+
     for col in range(columns-3):
         for row in range(rows):
             if board[row][col] == chip and board[row][col+1] == chip and board[row][col+2] == chip:
-                    value += 10000
-                    print("value", value)
-                    
+                    value += 200
+
+    #horisontaalinen vastustajan 3-rivissä
     for col in range(columns-3):
         for row in range(rows):
-            if board[row][col] == 1 and board[row][col+1] == 1 and board[row][col+2] == 1:
-                    value -= 10000
-                    print("value vastustaja", value)
+            if board[row][col] == others_chip and board[row][col+1] == others_chip and board[row][col+2] == others_chip:
+                    value -= 6
+    print("value", value)
     return value
 
 def next_empty_row(board, column):
@@ -199,72 +202,64 @@ def next_empty_row(board, column):
         if board[row][column] == 0:
             return row
 
-
-b=create_the_board()
-b[5][0]=1
-b[5][1]=1
-b[5][2]=1
-b[5][3]=1
-print(heuristic_value(b, 1))
-print(check_if_win(b, 0, (-1,-1)))
-print(b)
-print(next_empty_row(b, 5))
-
 def minimax(board, depth, maxplayer):
     """
-    Minimax toteutus wikipedian pseudokoodin mukaan.
-    Lisäksi katsottu erilaisia toteutuksia algoritmista pelien koodeissa.
-    Ei vielä Alpha-beta-karsintaa. 
-
+    Minimax toteutus wikipedian pseudokoodin mukaan. Lisäksi katsottu erilaisia toteutuksia algoritmista pelien koodeissa.
+    Keskeneräinen, pyörii mutta ei valitse fiksusti. Ei vielä Alpha-beta-karsintaa. 
     Args:
         board (array): pelilauta
         depth (int): syvyys
         maxplayer (boolean): maksimoija vai minimoija
-
     Returns:
         tuple: sarake sekä minimax-arvo
     """
-
     possible_columns = get_possible_columns(board)
     terminal_node = check_if_terminal_node(board)
+    print("terminal node", terminal_node)
 
     if depth == 0 or terminal_node is True: 
-        if terminal_node is True:
-            if check_if_win(board, 1, (-1,-1)):
-                return (None, -9999999999999)
-            elif check_if_win(board, 2, (-1,-1)):
-                return (None, 99999999999999)
-        else: #syvyys = 0
-            return None, heuristic_value(board, 2)
+        return (None, heuristic_value(board, 2))
 
     if maxplayer:
         value = -1000000000000 #vaihda oikea infinity?
         for move in possible_columns:
             copy_of_board = board.copy()
             empty_row = next_empty_row(copy_of_board, move)
-            copy_of_board[empty_row][move] == 2
+            copy_of_board[empty_row][move] = 2
+            print("copyboard", copy_of_board)
             #value = max(value, minimax(copy_of_board, depth-1, False))
+            #value = max(value, minimax_value[1])
             minimax_value = minimax(copy_of_board, depth-1, False)
-            value = max(value, minimax_value[1])
-        return move, value
+            print("minimax_value", minimax_value)
+            if minimax_value[1] > value:
+                value = minimax_value[1]
+                column = move
+                #column = minimax_value[0]
+        return column, value
 
     else: #miniplayer
         value= +10000000000000
         for move in possible_columns:
             copy_of_board = board.copy()
             empty_row = next_empty_row(copy_of_board, move)
-            copy_of_board[empty_row][move] == 1
+            copy_of_board[empty_row][move] = 1
             #value = min(value, minimax(copy_of_board, depth-1, True))
+            #value = min(value, minimax_value[1])
             minimax_value = minimax(copy_of_board, depth-1, True)
-            value = min(value, minimax_value[1])
-        return move, value
+            if value > minimax_value[1]:
+                value = minimax_value[1]
+                column = move
+                #column = minimax_value[0]
+                #print("minimax[0]", minimax_value[0])
+        return column, value
 
-    #    for each child of node do
-    #        value := max( value, minimax( child, depth − 1, FALSE ) )
-    #    return value
 
-    #else (* minimizing player *)
-    #    value := +∞
-    #    for each child of node do
-    #        value := min( value, minimax( child, depth − 1, TRUE ) )
-    #    return value
+# b=create_the_board()
+# b[5][0]=1
+# b[5][1]=1
+# b[5][2]=1
+# b[5][3]=1
+# print(heuristic_value(b, 1))
+# print(check_if_win(b, 0, (-1,-1)))
+# print(b)
+# print(next_empty_row(b, 5))

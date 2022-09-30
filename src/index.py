@@ -24,16 +24,18 @@ while True:
                 print("sarake täynnä, valitse toinen sarake.")
             else:
                 break
+        is_win = functions.check_if_win(board, turn, insert_chip)
 
     elif turn == ai_player:
         """Ei vielä tekoälyä, random valinta.
         """
         print("tekoäly tekee siirron:")
-        column, minimax_value = functions.minimax(board, 3, True)
+        (column, minimax_value) = functions.minimax(board, 3, True)
+        column = int(column)
         if board[0][column] == 0:
             row = functions.next_empty_row(board,column)
             board[row][column] = 2
-
+            is_win = functions.check_if_win(board, turn,(row,column))
         while False:
             insert_chip = functions.ai_choose_column(board)
             if insert_chip is False:
@@ -46,7 +48,7 @@ while True:
 
     print(board)
     print("row:", insert_chip[0], "\ncolumn:", insert_chip[1])
-    is_win = functions.check_if_win(board, turn, insert_chip)
+    
     if is_win is True:
         print("voitto!", turn)
         break
