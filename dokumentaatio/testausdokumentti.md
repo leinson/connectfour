@@ -4,12 +4,12 @@ Ohjelmaa on testattu sekä manuaalisesti automatisoiduilla yksikkö- ja integraa
 ## Yksikkö- ja integraatiotestaus
 
 ### Sovelluslogiikka
-Sovelluslogiikasta vastaava luokka on tällä hetkellä Functions, ja sillä on oma testiluokka TestFunctions.
+Sovelluslogiikasta vastaava tiedosto on tällä hetkellä Functions. Tämän tiedoston metodit on jaettu eri testiluokkiin: TestFunctions, TestCheckIfWin ja TestMiniMax.
 
 ### Testauskattavuus
-Testauksen haarautumakattavuus on tällä hetkellä 64%. 
+Testauksen haarautumakattavuus on tällä hetkellä 63%. 
 
-![](./testikattavuus/coverage_report_24_sept.png)
+![](./testikattavuus/coverage_report_1october.png)
 
 Näet viikkottaiset testikattavuusraportit dokumentaatio-kansion alakansiosta testikattavuus.
 
