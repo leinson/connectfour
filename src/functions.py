@@ -69,19 +69,19 @@ def check_if_win(matrix, turn, row_column):
     row = row_column[0]
     col = row_column[1]
 
-    #pidempi silmukka jos käydään minimax algoritmia, jolloin tarkka paikka ei ole tiedossa
-    if row_column == (-1,-1):
-        #rivi
+    # pidempi silmukka jos käydään minimax algoritmia, jolloin tarkka paikka ei ole tiedossa
+    if row_column == (-1, -1):
+        # rivi
         for i in range(columns-3):
             for j in range(rows):
                 if matrix[j][i] == chip and matrix[j][i+1] == chip and matrix[j][i+2] == chip and matrix[j][i+3] == chip:
                     return True
-        #sarake
+        # sarake
         for i in range(columns):
             for j in range(rows-3):
                 if matrix[j][i] == chip and matrix[j+1][i] == chip and matrix[j+2][i] == chip and matrix[j+3][i] == chip:
                     return True
-    else:            
+    else:
         # rivi
         counter = 0
         for i in matrix[row]:
@@ -103,7 +103,7 @@ def check_if_win(matrix, turn, row_column):
             if counter >= 4:
                 return True
 
-    # diagonaalit, Käy kaikki vaihtoehdot läpi paitsi ne, mihin ei voi tulla voittoa. 
+    # diagonaalit, Käy kaikki vaihtoehdot läpi paitsi ne, mihin ei voi tulla voittoa.
     # /-diagonaali
     for i in range(columns-3):
         for j in range(3, rows):
@@ -119,8 +119,9 @@ def check_if_win(matrix, turn, row_column):
 
     return False
 
+
 def change_turn(turn):
-    """ 
+    """
     Vaihtaa vuoron pelaajan ja tekoälyn välillä parillisuuden perusteella.
     Args:
         turn (int): pariton tai parillinen riippuen siitä, kumman vuoro on ollut.
@@ -128,6 +129,7 @@ def change_turn(turn):
     turn += 1
     turn = turn % 2
     return turn
+
 
 def get_possible_columns(board):
     """
@@ -146,22 +148,25 @@ def get_possible_columns(board):
     #print("get possible columns:", possible_columns)
     return possible_columns
 
+
 def check_if_terminal_node(board):
     """
     Onko kyseessä lopputapaus, vai onko mahdollisia siirtoja jäljellä.
-    Tarkistetaan, onko voittoa todettavissa pelaajalla tai ai:lla. 
+    Tarkistetaan, onko voittoa todettavissa pelaajalla tai ai:lla.
     Args:
         board (array): pelilauta
     Returns:
-        boolean: onko lopputapaus / ei enää siirtomahdollisuuksia vai ei 
+        boolean: onko lopputapaus / ei enää siirtomahdollisuuksia vai ei
     """
-    if len(get_possible_columns(board)) == 0:
+    if get_possible_columns(board) == []:
         return True
-    elif check_if_win(board, 1, (-1,-1)) is True:
+    if check_if_win(board, 0, (-1, -1)) is True:
         return True
-    elif check_if_win(board, 2, (-1,-1)) is True:
+    elif check_if_win(board, 1, (-1, -1)) is True:
         return True
-    return False
+    else:
+        return False
+
 
 def heuristic_value(board, chip):
     """Pisteet siirroista :
@@ -179,33 +184,35 @@ def heuristic_value(board, chip):
         int: palauttaa kyseisen vaihtoehtoisen pelilaudan pisteet
     """
     value = 0
-    #horisontaalinen 3-rivissä
-    columns=7
-    rows=6 
+    # horisontaalinen 3-rivissä
+    columns = 7
+    rows = 6
     others_chip = 1
 
     for col in range(columns-3):
         for row in range(rows):
             if board[row][col] == chip and board[row][col+1] == chip and board[row][col+2] == chip:
-                    value += 200
+                value += 200
 
-    #horisontaalinen vastustajan 3-rivissä
+    # horisontaalinen vastustajan 3-rivissä
     for col in range(columns-3):
         for row in range(rows):
             if board[row][col] == others_chip and board[row][col+1] == others_chip and board[row][col+2] == others_chip:
-                    value -= 6
+                value -= 6
     print("value", value)
     return value
 
+
 def next_empty_row(board, column):
-    for row in range(5,-1,-1):
+    for row in range(5, -1, -1):
         if board[row][column] == 0:
             return row
+
 
 def minimax(board, depth, maxplayer):
     """
     Minimax toteutus wikipedian pseudokoodin mukaan. Lisäksi katsottu erilaisia toteutuksia algoritmista pelien koodeissa.
-    Keskeneräinen, pyörii mutta ei valitse fiksusti. Ei vielä Alpha-beta-karsintaa. 
+    Keskeneräinen. Ei vielä Alpha-beta-karsintaa.
     Args:
         board (array): pelilauta
         depth (int): syvyys
@@ -217,11 +224,11 @@ def minimax(board, depth, maxplayer):
     terminal_node = check_if_terminal_node(board)
     print("terminal node", terminal_node)
 
-    if depth == 0 or terminal_node is True: 
+    if depth == 0 or terminal_node is True:
         return (None, heuristic_value(board, 2))
 
     if maxplayer:
-        value = -1000000000000 #vaihda oikea infinity?
+        value = -1000000000000  # vaihda oikea infinity?
         for move in possible_columns:
             copy_of_board = board.copy()
             empty_row = next_empty_row(copy_of_board, move)
@@ -237,8 +244,8 @@ def minimax(board, depth, maxplayer):
                 #column = minimax_value[0]
         return column, value
 
-    else: #miniplayer
-        value= +10000000000000
+    else:  # miniplayer
+        value = +10000000000000
         for move in possible_columns:
             copy_of_board = board.copy()
             empty_row = next_empty_row(copy_of_board, move)
@@ -252,14 +259,3 @@ def minimax(board, depth, maxplayer):
                 #column = minimax_value[0]
                 #print("minimax[0]", minimax_value[0])
         return column, value
-
-
-# b=create_the_board()
-# b[5][0]=1
-# b[5][1]=1
-# b[5][2]=1
-# b[5][3]=1
-# print(heuristic_value(b, 1))
-# print(check_if_win(b, 0, (-1,-1)))
-# print(b)
-# print(next_empty_row(b, 5))

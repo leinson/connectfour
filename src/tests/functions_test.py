@@ -4,6 +4,12 @@ import numpy as np
 
 
 class TestFunctions(unittest.TestCase):
+    """Testataan functions.py yleisiä metodeja.
+
+    Args:
+        unittest (_type_): _description_
+    """
+
     def setUp(self):
         self.turn = 0
         self.board = functions.create_the_board()
@@ -22,6 +28,16 @@ class TestFunctions(unittest.TestCase):
 
     def test_choose_column_player_correctly(self):
         np.testing.assert_equal((5, 1), functions.choose_column(1, self.board))
+
+
+class TestCheckIfWin(unittest.TestCase):
+    """
+    Testataan check_if_win metodia erilaisissa tilanteissa.
+    """
+
+    def setUp(self):
+        self.turn = 0
+        self.board = functions.create_the_board()
 
     def test_check_if_no_win_player(self):
         self.assertFalse(functions.check_if_win(self.board, 0, (3, 0)))
@@ -105,7 +121,47 @@ class TestFunctions(unittest.TestCase):
             self.board[i][i] = 2
         self.assertTrue(functions.check_if_win(self.board, 1, (0, 0)))
 
+    def test_row_win_in_minimax(self):
+        for i in range(0, 4):
+            self.board[5][i] = 1
+        self.assertTrue(functions.check_if_win(self.board, 0, (-1, -1)))
 
-#    def test_ai_choose_column_correctly(self):
-#        pass
-#       tee vasta kun ai algoritmi toiminnassa, nyt vaa random
+    def test_column_win_in_minimax(self):
+        for i in range(0, 4):
+            self.board[i][3] = 1
+        self.assertTrue(functions.check_if_win(self.board, 0, (-1, -1)))
+
+
+class TestMinimax(unittest.TestCase):
+    """
+    Testataan minimax-algoritmiin liittyviä metodeja ja apufunktioita. 
+    """
+
+    def setUp(self):
+        self.turn = 1
+        self.board = functions.create_the_board()
+
+    def test_get_possible_columns(self):
+        self.assertEqual(functions.get_possible_columns(
+            self.board), [0, 1, 2, 3, 4, 5, 6])
+        for i in range(7):
+            self.board[0][i] = 1
+        self.assertEqual(functions.get_possible_columns(self.board), [])
+
+    def test_returns_next_empty_row_correctly(self):
+        self.assertEqual(functions.next_empty_row(self.board, 3), 5)
+        for i in range(7):
+            self.board[5][i] = 1
+        self.assertEqual(functions.next_empty_row(self.board, 3), 4)
+
+    def test_checks_terminal_node_correctly(self):
+        self.assertFalse(functions.check_if_terminal_node(self.board))
+        for i in range(0, 4):
+            self.board[i][6] = 2
+        self.assertTrue(functions.check_if_terminal_node(self.board))
+        for i in range(0, 4):
+            self.board[3][i] = 1
+        self.assertTrue(functions.check_if_terminal_node(self.board))
+        for i in range(7):
+            self.board[0][i] = 1
+        self.assertTrue(functions.check_if_terminal_node(self.board))

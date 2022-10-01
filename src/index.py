@@ -33,9 +33,9 @@ while True:
         (column, minimax_value) = functions.minimax(board, 3, True)
         column = int(column)
         if board[0][column] == 0:
-            row = functions.next_empty_row(board,column)
+            row = functions.next_empty_row(board, column)
             board[row][column] = 2
-            is_win = functions.check_if_win(board, turn,(row,column))
+            is_win = functions.check_if_win(board, turn, (row, column))
         while False:
             insert_chip = functions.ai_choose_column(board)
             if insert_chip is False:
@@ -48,7 +48,7 @@ while True:
 
     print(board)
     print("row:", insert_chip[0], "\ncolumn:", insert_chip[1])
-    
+
     if is_win is True:
         print("voitto!", turn)
         break
