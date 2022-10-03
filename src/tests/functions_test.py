@@ -165,3 +165,56 @@ class TestMinimax(unittest.TestCase):
         for i in range(7):
             self.board[0][i] = 1
         self.assertTrue(functions.check_if_terminal_node(self.board))
+    
+    def test_heuristic_row_win(self):
+        self.assertEqual(functions.heuristic_value(self.board, 2), 0)
+        for i in range(4):
+            self.board[5][i] = 2
+        self.assertEqual(functions.heuristic_value(self.board, 2), 200)
+    
+    def test_heuristic_opposite_player_row_win(self):
+        self.assertEqual(functions.heuristic_value(self.board, 2), 0)
+        for i in range(4):
+            self.board[5][i] = 1
+        self.assertEqual(functions.heuristic_value(self.board, 2), -100)
+    
+    def test_heuristic_row_tie(self):
+        for i in range(4):
+            self.board[5][i] = 1
+            self.board[3][i] = 2
+        self.assertEqual(functions.heuristic_value(self.board, 2), 50)
+
+    def test_heuristic_column_win(self):
+        for i in range(4):
+            self.board[i][4] = 2
+        self.assertEqual(functions.heuristic_value(self.board, 2), 200)
+    
+    def test_heuristic_opposite_player_column_win(self):
+        self.assertEqual(functions.heuristic_value(self.board, 2), 0)
+        for i in range(4):
+            self.board[i][2] = 1
+        self.assertEqual(functions.heuristic_value(self.board, 2), -100)
+    
+    def test_heuristic_diagonal1_win(self):
+        row = 5
+        for i in range(4):
+            self.board[row][i] = 2
+            row -= 1
+        self.assertEqual(functions.heuristic_value(self.board, 2), 200)
+
+    def test_heuristic_opposite_player_diagonal1_win(self):
+        row = 5
+        for i in range(4):
+            self.board[row][i] = 1
+            row -= 1
+        self.assertEqual(functions.heuristic_value(self.board, 2), -100)
+
+    def test_heuristic_diagonal2_win(self):
+        for i in range(4):
+            self.board[i][i] = 2
+        self.assertEqual(functions.heuristic_value(self.board, 2), 200)
+
+    def test_heuristic_opposite_player_diagonal2_win(self):
+        for i in range(4):
+            self.board[i][i] = 1
+        self.assertEqual(functions.heuristic_value(self.board, 2), -100)

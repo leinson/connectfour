@@ -10,7 +10,7 @@ import functions
 
 
 def ui_pygame():
-    """ Pygame graafinen käyttöjärjestelmä.
+    """ Pygame graafinen käyttöjärjestelmä ILMAN MINIMAXIA.
         Oikean sarakkeen painaminen tiputtaa nappulan kyseiseen sarakkeeseen.
         Voitto tulostuu tällä hetkellä terminaaliin.
         Pelilaudan rakentamiseen otettu inspiraatiota ja ohjeita seuraavista lähteistä:
@@ -28,8 +28,7 @@ def ui_pygame():
 
     board = functions.create_the_board()
     board = np.zeros((6, 7))
-    board[1][4] = 1
-    board[3][2] = 2
+
 
     pygame.init()
 

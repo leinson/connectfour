@@ -89,7 +89,6 @@ def check_if_win(matrix, turn, row_column):
                 counter += 1
             else:
                 counter = 0
-            print("rivicounter:", counter)
             if counter >= 4:
                 return True
         # sarake
@@ -99,7 +98,6 @@ def check_if_win(matrix, turn, row_column):
                 counter += 1
             else:
                 counter = 0
-            print("sarakecounter:", counter)
             if counter >= 4:
                 return True
 
@@ -171,9 +169,8 @@ def check_if_terminal_node(board):
 def heuristic_value(board, chip):
     """Pisteet siirroista :
     4-connect = 200
-    3-connect = 10
-    2-connect = 5
-    3-connect vastustaja = -6
+    4-connect vastustaja = -100
+    tasapeli = 50
     Käydään läpi eri vaihtoehdot saada pisteitä ja lasketaan yhteispisteet.
     Erittäin keskeneräinen.
     Pisteytykseen liittyen otettu ideaa tästä videosta: https://www.youtube.com/watch?v=y7AKtWGOPAE&t=0s
@@ -184,24 +181,60 @@ def heuristic_value(board, chip):
         int: palauttaa kyseisen vaihtoehtoisen pelilaudan pisteet
     """
     value = 0
-    # horisontaalinen 3-rivissä
     columns = 7
     rows = 6
     others_chip = 1
-
+    tie_1 = 0
+    tie_2 =0
+    # 4-rivissä
     for col in range(columns-3):
         for row in range(rows):
-            if board[row][col] == chip and board[row][col+1] == chip and board[row][col+2] == chip:
+            if board[row][col] == chip and board[row][col+1] == chip and board[row][col+2] == chip and board[row][col+3] == chip:
                 value += 200
+                tie_1 += 1
+    for col in range(columns):
+        for row in range(rows-3):
+            if board[row][col] == chip and board[row+1][col] == chip and board[row+2][col] == chip and board[row+3][col] == chip:
+                value +=200
+                tie_1 += 1 
+    for col in range(columns-3):
+        for row in range(3, rows):
+            if board[row][col] == chip and board[row-1][col+1] == chip and board[row-2][col+2] == chip and board[row-3][col+3] == chip:
+                value +=200
+                tie_1 += 1
+    for col in range(columns-3):
+        for row in range(rows-3):
+            if board[row][col] == chip and board[row+1][col+1] == chip and board[row+2][col+2] == chip and board[row+3][col+3] == chip:
+                value+=200
+                tie_1 += 1
 
-    # horisontaalinen vastustajan 3-rivissä
+    # vastustajan 4-rivissä
     for col in range(columns-3):
         for row in range(rows):
-            if board[row][col] == others_chip and board[row][col+1] == others_chip and board[row][col+2] == others_chip:
-                value -= 6
+            if board[row][col] == others_chip and board[row][col+1] == others_chip and board[row][col+2] == others_chip and board[row][col+3] == others_chip:
+                value -= 100
+                tie_2 +=1
+    for col in range(columns):
+        for row in range(rows-3):
+            if board[row][col] == others_chip and board[row+1][col] == others_chip and board[row+2][col] == others_chip and board[row+3][col] == others_chip:
+                value -=100
+                tie_2 +=1
+    for col in range(columns-3):
+        for row in range(3, rows):
+            if board[row][col] == others_chip and board[row-1][col+1] == others_chip and board[row-2][col+2] == others_chip and board[row-3][col+3] == others_chip:
+                    value -=100
+                    tie_2 +=1                     
+    for col in range(columns-3):
+        for row in range(rows-3):
+            if board[row][col] == others_chip and board[row+1][col+1] == others_chip and board[row+2][col+2] == others_chip and board[row+3][col+3] == others_chip:
+                    value-=100
+                    tie_2 +=1
+    # tasapeli
+    if tie_1 != 0 and tie_2 != 0:
+        value = 50
+
     print("value", value)
     return value
-
 
 def next_empty_row(board, column):
     for row in range(5, -1, -1):
@@ -209,7 +242,7 @@ def next_empty_row(board, column):
             return row
 
 
-def minimax(board, depth, maxplayer):
+def minimax(board, depth, alpha, beta, maxplayer):
     """
     Minimax toteutus wikipedian pseudokoodin mukaan. Lisäksi katsottu erilaisia toteutuksia algoritmista pelien koodeissa.
     Keskeneräinen. Ei vielä Alpha-beta-karsintaa.
@@ -225,6 +258,7 @@ def minimax(board, depth, maxplayer):
     print("terminal node", terminal_node)
 
     if depth == 0 or terminal_node is True:
+        #tarkista onko maxplayer true vai false ja vaihda nappula?
         return (None, heuristic_value(board, 2))
 
     if maxplayer:
@@ -233,15 +267,18 @@ def minimax(board, depth, maxplayer):
             copy_of_board = board.copy()
             empty_row = next_empty_row(copy_of_board, move)
             copy_of_board[empty_row][move] = 2
-            print("copyboard", copy_of_board)
             #value = max(value, minimax(copy_of_board, depth-1, False))
             #value = max(value, minimax_value[1])
-            minimax_value = minimax(copy_of_board, depth-1, False)
+            minimax_value = minimax(copy_of_board, depth-1, alpha, beta, False)
             print("minimax_value", minimax_value)
             if minimax_value[1] > value:
                 value = minimax_value[1]
                 column = move
                 #column = minimax_value[0]
+            if value >= beta:
+                break
+            alpha = max(alpha, value)
+            print("copyboard", copy_of_board)
         return column, value
 
     else:  # miniplayer
@@ -252,10 +289,14 @@ def minimax(board, depth, maxplayer):
             copy_of_board[empty_row][move] = 1
             #value = min(value, minimax(copy_of_board, depth-1, True))
             #value = min(value, minimax_value[1])
-            minimax_value = minimax(copy_of_board, depth-1, True)
+            minimax_value = minimax(copy_of_board, depth-1, alpha, beta, True)
             if value > minimax_value[1]:
                 value = minimax_value[1]
                 column = move
-                #column = minimax_value[0]
+                 #column = minimax_value[0]
                 #print("minimax[0]", minimax_value[0])
+            if value <= alpha:
+                break
+            beta = min(beta, value)
+            print("copyboard", copy_of_board)
         return column, value
