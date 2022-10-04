@@ -1,6 +1,8 @@
 from random import randint
 import numpy as np
 
+# TODO
+# Jaa tiedosto kahteeen: minimaxiin & muihin funktioihin
 
 def create_the_board():
     """ Luo pelilaudan, eli nollilla alustettu "matriksi".
@@ -137,17 +139,12 @@ def get_possible_columns(board):
     Returns:
         list: listan mahdollisista sarakkeista.
     """
-    #0123456
-    #3241506
     possible_columns = [3, 2, 4, 1, 5, 0, 6]
-    #possible_columns = []
     columns = 7
     last_row = 0
     for column in range(columns):
         if board[last_row][column] != 0:
             possible_columns.remove(column)
-        # if board[last_row][column] == 0:
-        #     possible_columns.append(column)
     return possible_columns
 
 

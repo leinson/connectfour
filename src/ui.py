@@ -4,6 +4,7 @@ import numpy as np
 import functions
 
 # TODO:
+# minimaxin yhdistäminen tähän
 # neliöiden sijaan circles
 # näytölle myös ohjeet ja kommentit jotka atm terminaaliin
 # Taulukon ulkopuolelle klikkaamisen virheen korjaus

@@ -2,6 +2,8 @@ import unittest
 import functions
 import numpy as np
 
+# TODO:
+# Minimaxin testaus
 
 class TestFunctions(unittest.TestCase):
     """Testataan functions.py yleisiä metodeja.
