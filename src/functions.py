@@ -137,13 +137,17 @@ def get_possible_columns(board):
     Returns:
         list: listan mahdollisista sarakkeista.
     """
-    possible_columns = []
+    #0123456
+    #3241506
+    possible_columns = [3, 2, 4, 1, 5, 0, 6]
+    #possible_columns = []
     columns = 7
     last_row = 0
     for column in range(columns):
-        if board[last_row][column] == 0:
-            possible_columns.append(column)
-    #print("get possible columns:", possible_columns)
+        if board[last_row][column] != 0:
+            possible_columns.remove(column)
+        # if board[last_row][column] == 0:
+        #     possible_columns.append(column)
     return possible_columns
 
 
@@ -172,7 +176,7 @@ def heuristic_value(board, chip):
     4-connect vastustaja = -100
     tasapeli = 50
     Käydään läpi eri vaihtoehdot saada pisteitä ja lasketaan yhteispisteet.
-    Erittäin keskeneräinen.
+    Blokkaa atm rivi+sarakevoitot hyvin, ei huomaa hyvin omia voittomahiksia. 
     Pisteytykseen liittyen otettu ideaa tästä videosta: https://www.youtube.com/watch?v=y7AKtWGOPAE&t=0s
     Args:
         board (array): pelilauta
@@ -183,7 +187,10 @@ def heuristic_value(board, chip):
     value = 0
     columns = 7
     rows = 6
-    others_chip = 1
+    if chip == 2:
+        others_chip = 1
+    else:
+        others_chip = 2
     tie_1 = 0
     tie_2 =0
     # 4-rivissä
@@ -256,25 +263,24 @@ def minimax(board, depth, alpha, beta, maxplayer):
     possible_columns = get_possible_columns(board)
     terminal_node = check_if_terminal_node(board)
     print("terminal node", terminal_node)
-
-    if depth == 0 or terminal_node is True:
-        #tarkista onko maxplayer true vai false ja vaihda nappula?
-        return (None, heuristic_value(board, 2))
+    if maxplayer is True:
+        chip = 2
+    else:
+        chip = 1
+    if terminal_node is True or depth == 0:
+        return (None, heuristic_value(board, chip))
 
     if maxplayer:
-        value = -1000000000000  # vaihda oikea infinity?
+        value = -1000000000000 
         for move in possible_columns:
             copy_of_board = board.copy()
             empty_row = next_empty_row(copy_of_board, move)
             copy_of_board[empty_row][move] = 2
-            #value = max(value, minimax(copy_of_board, depth-1, False))
-            #value = max(value, minimax_value[1])
             minimax_value = minimax(copy_of_board, depth-1, alpha, beta, False)
             print("minimax_value", minimax_value)
             if minimax_value[1] > value:
                 value = minimax_value[1]
                 column = move
-                #column = minimax_value[0]
             if value >= beta:
                 break
             alpha = max(alpha, value)
@@ -287,14 +293,10 @@ def minimax(board, depth, alpha, beta, maxplayer):
             copy_of_board = board.copy()
             empty_row = next_empty_row(copy_of_board, move)
             copy_of_board[empty_row][move] = 1
-            #value = min(value, minimax(copy_of_board, depth-1, True))
-            #value = min(value, minimax_value[1])
             minimax_value = minimax(copy_of_board, depth-1, alpha, beta, True)
             if value > minimax_value[1]:
                 value = minimax_value[1]
                 column = move
-                 #column = minimax_value[0]
-                #print("minimax[0]", minimax_value[0])
             if value <= alpha:
                 break
             beta = min(beta, value)

@@ -27,8 +27,6 @@ def ui_pygame():
     margin = 20
 
     board = functions.create_the_board()
-    board = np.zeros((6, 7))
-
 
     pygame.init()
 
@@ -46,6 +44,10 @@ def ui_pygame():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
+            
+            if game_over is False and functions.get_possible_columns(board) == []:
+                print("pelilauta täynnä, tasapeli!")
+                game_over = True
 
             elif event.type == pygame.MOUSEBUTTONDOWN and turn == player and game_over is False:
                 position = pygame.mouse.get_pos()
@@ -53,16 +55,14 @@ def ui_pygame():
                 row = position[1] // (height + margin)
 
                 insert_chip = functions.choose_column(column, board)
-                # print(insert_chip)
-                #print(position, "koordinaatit:", row, column)
                 if insert_chip is False:
                     print("Sarake täynnä, valitse toinen sarake.")
                 else:
                     is_win = functions.check_if_win(board, turn, insert_chip)
-                    turn = functions.change_turn(turn)
                     if is_win is True:
                         print("Sinä voitit!")
                         game_over = True
+                    turn = functions.change_turn(turn)
 
         if turn == ai_player and game_over is False:
             insert_ai_chip = functions.ai_choose_column(board)

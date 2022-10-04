@@ -142,8 +142,7 @@ class TestMinimax(unittest.TestCase):
         self.board = functions.create_the_board()
 
     def test_get_possible_columns(self):
-        self.assertEqual(functions.get_possible_columns(
-            self.board), [0, 1, 2, 3, 4, 5, 6])
+        self.assertEqual(functions.get_possible_columns(self.board), [3, 2, 4, 1, 5, 0, 6])
         for i in range(7):
             self.board[0][i] = 1
         self.assertEqual(functions.get_possible_columns(self.board), [])

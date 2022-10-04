@@ -36,6 +36,11 @@ while True:
             row = functions.next_empty_row(board, column)
             board[row][column] = 2
             is_win = functions.check_if_win(board, turn, (row, column))
+        else:
+            if functions.get_possible_columns(board) == []:
+                print("lauta täynnä, tasapeli")
+                break
+
         while False: #random valinta ai
             insert_chip = functions.ai_choose_column(board)
             if insert_chip is False:
