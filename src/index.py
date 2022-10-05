@@ -25,6 +25,8 @@ while True:
             else:
                 break
         is_win = functions.check_if_win(board, turn, insert_chip)
+        print("Pelilauta \n",board)
+        print("row:", insert_chip[0], "\ncolumn:", insert_chip[1])
 
     elif turn == ai_player:
         """Ei vielä tekoälyä, random valinta.
@@ -40,19 +42,15 @@ while True:
             if functions.get_possible_columns(board) == []:
                 print("lauta täynnä, tasapeli")
                 break
-
+        print("Pelilauta \n",board)
+        print("row:", row, "\ncolumn:", column)
         while False: #random valinta ai
             insert_chip = functions.ai_choose_column(board)
             if insert_chip is False:
                 print("sarake täynnä, tkoäly valitsee toisen sarakkeen.")
             else:
                 break
-    else:
-        print("virhe vuoronvalinnassa")
-        break
-
-    print("Pelilauta \n",board)
-    print("row:", insert_chip[0], "\ncolumn:", insert_chip[1])
+  
 
     if is_win is True:
         print("voitto!", turn)

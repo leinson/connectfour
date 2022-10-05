@@ -66,15 +66,22 @@ def ui_pygame():
                     turn = functions.change_turn(turn)
 
         if turn == ai_player and game_over is False:
-            insert_ai_chip = functions.ai_choose_column(board)
-            if insert_ai_chip is False:
-                print("AIn valitsema sarake on täynnä, valitsee toisen")
-            else:
-                is_win = functions.check_if_win(board, turn, insert_ai_chip)
-                turn = functions.change_turn(turn)
+
+            (column, minimax_value) = functions.minimax(board, 5, -100000000000, +100000000000, True)
+            column = int(column)
+            if board[0][column] == 0:
+                row = functions.next_empty_row(board, column)
+                board[row][column] = 2
+                is_win = functions.check_if_win(board, turn, (row, column))
                 if is_win is True:
                     print("AI voitti!")
                     game_over = True
+            else:
+                if functions.get_possible_columns(board) == []:
+                    print("lauta täynnä, tasapeli")
+                    game_over = True
+            turn = functions.change_turn(turn)
+
         screen.fill(grey)
 # pelilaudan piirto
         for row in range(6):

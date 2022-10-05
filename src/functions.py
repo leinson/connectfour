@@ -259,12 +259,13 @@ def minimax(board, depth, alpha, beta, maxplayer):
     """
     possible_columns = get_possible_columns(board)
     terminal_node = check_if_terminal_node(board)
-    print("terminal node", terminal_node)
+    #poista ehkä tämä ehto
     if maxplayer is True:
         chip = 2
     else:
         chip = 1
     if terminal_node is True or depth == 0:
+        print("terminal node or depth 0")
         return (None, heuristic_value(board, chip))
 
     if maxplayer:
@@ -274,14 +275,15 @@ def minimax(board, depth, alpha, beta, maxplayer):
             empty_row = next_empty_row(copy_of_board, move)
             copy_of_board[empty_row][move] = 2
             minimax_value = minimax(copy_of_board, depth-1, alpha, beta, False)
-            print("minimax_value", minimax_value)
+            
             if minimax_value[1] > value:
                 value = minimax_value[1]
                 column = move
             if value >= beta:
                 break
             alpha = max(alpha, value)
-            print("copyboard", copy_of_board)
+            #print("copyboard", copy_of_board)
+        print("column:", column, "minimax_value:", minimax_value)
         return column, value
 
     else:  # miniplayer
@@ -297,5 +299,6 @@ def minimax(board, depth, alpha, beta, maxplayer):
             if value <= alpha:
                 break
             beta = min(beta, value)
-            print("copyboard", copy_of_board)
+            #print("copyboard", copy_of_board)
+        print("column:", column, "minimax_value:", minimax_value)
         return column, value
