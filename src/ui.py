@@ -2,16 +2,15 @@
 import pygame
 import numpy as np
 import functions
+import minimax_a_b
 
 # TODO:
-# minimaxin yhdistäminen tähän
 # neliöiden sijaan circles
 # näytölle myös ohjeet ja kommentit jotka atm terminaaliin
-# Taulukon ulkopuolelle klikkaamisen virheen korjaus
-
+# pelilaudan piirrosta, initialize jutuista ainakin erilliset funktiot
 
 def ui_pygame():
-    """ Pygame graafinen käyttöjärjestelmä ILMAN MINIMAXIA.
+    """ Pygame graafinen käyttöjärjestelmä
         Oikean sarakkeen painaminen tiputtaa nappulan kyseiseen sarakkeeseen.
         Voitto tulostuu tällä hetkellä terminaaliin.
         Pelilaudan rakentamiseen otettu inspiraatiota ja ohjeita seuraavista lähteistä:
@@ -45,7 +44,7 @@ def ui_pygame():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
-            
+
             if game_over is False and functions.get_possible_columns(board) == []:
                 print("pelilauta täynnä, tasapeli!")
                 game_over = True
@@ -54,6 +53,8 @@ def ui_pygame():
                 position = pygame.mouse.get_pos()
                 column = position[0] // (width + margin)
                 row = position[1] // (height + margin)
+                if column == 7:
+                    column = 6
 
                 insert_chip = functions.choose_column(column, board)
                 if insert_chip is False:
@@ -65,9 +66,25 @@ def ui_pygame():
                         game_over = True
                     turn = functions.change_turn(turn)
 
-        if turn == ai_player and game_over is False:
+#pelilaudan piirto
+            for row in range(6):
+                for column in range(7):
+                    color = white
+                    if board[row][column] == 1:
+                        color = blue
+                    elif board[row][column] == 2:
+                        color = red
+                    pygame.draw.rect(screen,
+                                    color,
+                                    [(margin + width) * column + margin,
+                                    (margin + height) * row + margin,
+                                    width,
+                                    height])
+            pygame.display.update()
 
-            (column, minimax_value) = functions.minimax(board, 5, -100000000000, +100000000000, True)
+        if turn == ai_player and game_over is False:
+            (column, minimax_value) = minimax_a_b.minimax(
+                board, 5, -100000000000, +100000000000, True)
             column = int(column)
             if board[0][column] == 0:
                 row = functions.next_empty_row(board, column)

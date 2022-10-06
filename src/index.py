@@ -1,5 +1,6 @@
 
 import functions
+import minimax_a_b
 
 # Muutamien tärkeiden muuttujien alustus
 player = 0
@@ -8,7 +9,8 @@ turn = player
 board = functions.create_the_board()
 
 while True:
-    """ Alkuvaiheen pelisilmukka.
+    """ Alkuvaiheen pelisilmukka, tulostuu terminaaliin. Siirryn käyttämään graafista UI:ta,
+        poistan tämän luultavasti ensi viikolla.
         Vuoron omaava valitsee sarakkeen, jos on täynnä, valitsee uudelleen.
         Pelaaja voi päättää, jos jatketaan tai päätetään peli.
         Vuoronvaihto pelaajan ja tekoälyn välillä.
@@ -25,14 +27,15 @@ while True:
             else:
                 break
         is_win = functions.check_if_win(board, turn, insert_chip)
-        print("Pelilauta \n",board)
+        print("Pelilauta \n", board)
         print("row:", insert_chip[0], "\ncolumn:", insert_chip[1])
 
     elif turn == ai_player:
         """Ei vielä tekoälyä, random valinta.
         """
         print("tekoäly tekee siirron:")
-        (column, minimax_value) = functions.minimax(board, 5, -100000000000, +100000000000, True)
+        (column, minimax_value) = minimax_a_b.minimax(
+            board, 5, -100000000000, +100000000000, True)
         column = int(column)
         if board[0][column] == 0:
             row = functions.next_empty_row(board, column)
@@ -42,15 +45,14 @@ while True:
             if functions.get_possible_columns(board) == []:
                 print("lauta täynnä, tasapeli")
                 break
-        print("Pelilauta \n",board)
+        print("Pelilauta \n", board)
         print("row:", row, "\ncolumn:", column)
-        while False: #random valinta ai
+        while False:  # random valinta ai
             insert_chip = functions.ai_choose_column(board)
             if insert_chip is False:
                 print("sarake täynnä, tkoäly valitsee toisen sarakkeen.")
             else:
                 break
-  
 
     if is_win is True:
         print("voitto!", turn)
