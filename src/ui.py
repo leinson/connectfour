@@ -9,6 +9,7 @@ import minimax_a_b
 # näytölle myös ohjeet ja kommentit jotka atm terminaaliin
 # pelilaudan piirrosta, initialize jutuista ainakin erilliset funktiot
 
+
 def ui_pygame():
     """ Pygame graafinen käyttöjärjestelmä
         Oikean sarakkeen painaminen tiputtaa nappulan kyseiseen sarakkeeseen.
@@ -66,7 +67,7 @@ def ui_pygame():
                         game_over = True
                     turn = functions.change_turn(turn)
 
-#pelilaudan piirto
+# pelilaudan piirto
             for row in range(6):
                 for column in range(7):
                     color = white
@@ -75,17 +76,19 @@ def ui_pygame():
                     elif board[row][column] == 2:
                         color = red
                     pygame.draw.rect(screen,
-                                    color,
-                                    [(margin + width) * column + margin,
-                                    (margin + height) * row + margin,
-                                    width,
-                                    height])
+                                     color,
+                                     [(margin + width) * column + margin,
+                                      (margin + height) * row + margin,
+                                      width,
+                                      height])
             pygame.display.update()
 
         if turn == ai_player and game_over is False:
-            (column, minimax_value) = minimax_a_b.minimax(
-                board, 5, -100000000000, +100000000000, True)
-            column = int(column)
+            column, minimax_value = minimax_a_b.minimax(
+                board, 6, -100000000000, +100000000000, True)
+            # minimoija jatkaa samalla listalla, vain max muuttaa
+            # tsekkaa aika, järjestä lista? siirrä tänne? anna minimaxille parametrina järjestyslistasyvyys vaihda i.
+            print("FINALcolumn:", column, "value", minimax_value)
             if board[0][column] == 0:
                 row = functions.next_empty_row(board, column)
                 board[row][column] = 2

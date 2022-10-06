@@ -30,25 +30,25 @@ def choose_column(column, matrix):
     return False
 
 
-def ai_choose_column(matrix):
-    """ POISTA kun minimax toimii.
-        Kokeilen ensin random-valinnalla,
-        että saan muut pelin toiminnallisuudet pyörimään.
-        Valitsee random sarakkeen. Muuten toiminta sama kuin
-        pelaajan funktiossa "choose_column".
-    Args:
-        matrix (np array): pelilauta
-    Returns:
-        boolean: True jos sarakkeessa tilaa, False jos sarake täynnä.
-    """
-    column = randint(0, 5)
-    row_counter = 5
-    for i in reversed(matrix.T[column]):
-        if i == 0:
-            matrix[row_counter][column] = 2
-            return (row_counter, column)
-        row_counter -= 1
-    return False
+# def ai_choose_column(matrix):
+#     """ POISTA kun minimax toimii.
+#         Kokeilen ensin random-valinnalla,
+#         että saan muut pelin toiminnallisuudet pyörimään.
+#         Valitsee random sarakkeen. Muuten toiminta sama kuin
+#         pelaajan funktiossa "choose_column".
+#     Args:
+#         matrix (np array): pelilauta
+#     Returns:
+#         boolean: True jos sarakkeessa tilaa, False jos sarake täynnä.
+#     """
+#     column = randint(0, 5)
+#     row_counter = 5
+#     for i in reversed(matrix.T[column]):
+#         if i == 0:
+#             matrix[row_counter][column] = 2
+#             return (row_counter, column)
+#         row_counter -= 1
+#     return False
 
 
 def check_if_win(matrix, turn, row_column):

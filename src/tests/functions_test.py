@@ -162,13 +162,15 @@ class TestMinimax(unittest.TestCase):
         self.assertFalse(minimax_a_b.check_if_terminal_node(self.board))
         for i in range(0, 4):
             self.board[i][6] = 2
-        self.assertTrue(minimax_a_b.check_if_terminal_node(self.board))
+        self.assertEqual(minimax_a_b.check_if_terminal_node(self.board), 2)
+        self.board[0][6] = 0  # poistetaan voittorivi
         for i in range(0, 4):
             self.board[3][i] = 1
-        self.assertTrue(minimax_a_b.check_if_terminal_node(self.board))
+        self.assertEqual(minimax_a_b.check_if_terminal_node(self.board), 1)
+
         for i in range(7):
             self.board[0][i] = 1
-        self.assertTrue(minimax_a_b.check_if_terminal_node(self.board))
+        self.assertEqual(minimax_a_b.check_if_terminal_node(self.board), -1)
 
     def test_heuristic_row_win(self):
         self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), 0)
@@ -181,12 +183,6 @@ class TestMinimax(unittest.TestCase):
         for i in range(4):
             self.board[5][i] = 1
         self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), -100)
-
-    def test_heuristic_row_tie(self):
-        for i in range(4):
-            self.board[5][i] = 1
-            self.board[3][i] = 2
-        self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), 50)
 
     def test_heuristic_column_win(self):
         for i in range(4):
