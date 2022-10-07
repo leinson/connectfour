@@ -8,6 +8,7 @@ import minimax_a_b
 # neliöiden sijaan circles
 # näytölle myös ohjeet ja kommentit jotka atm terminaaliin
 # pelilaudan piirrosta, initialize jutuista ainakin erilliset funktiot
+# tehostus minimaxiin syvyyksien aikaa mittaamalla jos ehdin
 
 
 def ui_pygame():

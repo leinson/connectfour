@@ -1,4 +1,4 @@
-from random import randint
+#from random import randint
 import numpy as np
 
 
@@ -28,28 +28,6 @@ def choose_column(column, matrix):
             return (row_counter, column)
         row_counter -= 1
     return False
-
-
-# def ai_choose_column(matrix):
-#     """ POISTA kun minimax toimii.
-#         Kokeilen ensin random-valinnalla,
-#         että saan muut pelin toiminnallisuudet pyörimään.
-#         Valitsee random sarakkeen. Muuten toiminta sama kuin
-#         pelaajan funktiossa "choose_column".
-#     Args:
-#         matrix (np array): pelilauta
-#     Returns:
-#         boolean: True jos sarakkeessa tilaa, False jos sarake täynnä.
-#     """
-#     column = randint(0, 5)
-#     row_counter = 5
-#     for i in reversed(matrix.T[column]):
-#         if i == 0:
-#             matrix[row_counter][column] = 2
-#             return (row_counter, column)
-#         row_counter -= 1
-#     return False
-
 
 def check_if_win(matrix, turn, row_column):
     """ Tarkistetaan, onko voittoriviä. Valitaan, kenen nappuloita katsotaan.
@@ -101,7 +79,6 @@ def check_if_win(matrix, turn, row_column):
             if counter >= 4:
                 return True
 
-    # diagonaalit, Käy kaikki vaihtoehdot läpi paitsi ne, mihin ei voi tulla voittoa.
     # /-diagonaali
     for i in range(columns-3):
         for j in range(3, rows):
@@ -149,3 +126,25 @@ def next_empty_row(board, column):
     for row in range(5, -1, -1):
         if board[row][column] == 0:
             return row
+
+
+# def ai_choose_column(matrix):
+#     """ POISTA kun minimax toimii. Voisin säästää ja tehdä ns easy moden peliin jos ehdin.
+#         Kokeilen ensin random-valinnalla,
+#         että saan muut pelin toiminnallisuudet pyörimään.
+#         Valitsee random sarakkeen. Muuten toiminta sama kuin
+#         pelaajan funktiossa "choose_column".
+#     Args:
+#         matrix (np array): pelilauta
+#     Returns:
+#         boolean: True jos sarakkeessa tilaa, False jos sarake täynnä.
+#     """
+#     column = randint(0, 5)
+#     row_counter = 5
+#     for i in reversed(matrix.T[column]):
+#         if i == 0:
+#             matrix[row_counter][column] = 2
+#             return (row_counter, column)
+#         row_counter -= 1
+#     return False
+

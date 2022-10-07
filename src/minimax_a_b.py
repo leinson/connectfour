@@ -62,13 +62,16 @@ def check_if_terminal_node(board):
     Returns:
         boolean: onko lopputapaus / ei enää siirtomahdollisuuksia vai ei
     """
-    if functions.get_possible_columns(board) == []:
-        return -1
+    node = False
+    
     if functions.check_if_win(board, 1, (-1, -1)) is True:
-        return 2
-    if functions.check_if_win(board, 0, (-1, -1)) is True:
-        return 1
-    return False
+        node = 2
+    elif functions.check_if_win(board, 0, (-1, -1)) is True:
+        node = 1
+    else:
+        if functions.get_possible_columns(board) == []:
+            node = -1
+    return node
 
 
 def minimax(board, depth, alpha, beta, maxplayer):
@@ -85,7 +88,7 @@ def minimax(board, depth, alpha, beta, maxplayer):
     terminal_node = check_if_terminal_node(board)
 
     chip = 2
-    # siirrä näitä terminal node funktioon, siistimpi
+    # siirrä ehtoja terminal node funktioon, siistimpi, depth parametriks?
     if terminal_node == 2:
         if depth == 5:
             return None, 3000  # kokeilu, jotta suosii matalan syvyyksien voittoja
