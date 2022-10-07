@@ -4,16 +4,16 @@ Ohjelmaa on testattu sekä manuaalisesti automatisoiduilla yksikkö- ja integraa
 ## Yksikkö- ja integraatiotestaus
 
 ### Sovelluslogiikka
-Sovelluslogiikasta vastaava tiedosto on tällä hetkellä Functions. Tämän tiedoston metodit on jaettu eri testiluokkiin: TestFunctions, TestCheckIfWin ja TestMiniMax.
+Sovelluslogiikasta vastaavat tiedostot ovat tällä hetkellä functions ja minimax_a_b. Näiden tiedostojen metodit ovat jaettu eri testiluokkiin tiedostoon functions_test.py: TestFunctions, TestCheckIfWin ja TestMiniMax.
 
 ### Testauskattavuus
-Testauksen haarautumakattavuus on tällä hetkellä 63%. 
+Testauksen haarautumakattavuus on tällä hetkellä 75%. 
 
-![](./testikattavuus/coverage_report_1october.png)
+![](./testikattavuus/coveragereport7oct.png)
 
 Näet viikkottaiset testikattavuusraportit dokumentaatio-kansion alakansiosta testikattavuus.
 
-Käyttöliittymä on jätetty testikattavuuden ulkopuolelle. Käyttöliittymiä on tällä hetkellä kaksi: index.py toimii komentorivillä, ja ui.py pygamella graafisesti.
+Käyttöliittymä on jätetty testikattavuuden ulkopuolelle. Käyttöliittymiä on tällä hetkellä kaksi: index.py toimii komentorivillä, ja ui.py pygamella graafisesti. Käyttöliittymällä toimiva jätetään jossain vaiheessa ohjelmasta pois.
 
 ### Järjestelmätestaus
 Järjestelmätestausta on suoritettu manuaalisesti. 
@@ -22,6 +22,6 @@ Järjestelmätestausta on suoritettu manuaalisesti.
 Sovellusta on testattu Linux-ympäristössä, missä sovellus on kehitetty.
 
 ### Toiminnallisuudet ja sovellukseen jääneet laatuongelmat 
-Testausta on aloitettu, mutta testit eivät vielä kata koko ohjelmaa. Virhesyötöillä saa vielä sovelluksen kaatumaan. 
-Kyseisiä asioita täydennetään sovelluksen kehityskaaren aikana. 
+Testausta on aloitettu, mutta testit eivät vielä kata koko ohjelmaa.  Itse minimax funktion testaus on tällä hetkellä kesken, muuten testejä on tehty lähes kaikille funktioille ja haaroille. Virhesyötöillä saa vielä sovelluksen kaatumaan komentorivikäyttöliittymässä, tätä en kuitenkaan lähde korjaamaan koska poistan kyseisen käyttöliittymän lähiaikoina. 
+Laatuongelmia täydennetään ja korjataan sovelluksen kehityskaaren aikana. 
  
