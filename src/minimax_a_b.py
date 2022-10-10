@@ -118,7 +118,6 @@ def minimax(board, depth, alpha, beta, maxplayer):
             if value >= beta:
                 break
             alpha = max(alpha, value)
-            #print("copyboard", copy_of_board)
         print("column:", column, "minimax_value:", minimax_value)
         return column, value
 
@@ -135,6 +134,5 @@ def minimax(board, depth, alpha, beta, maxplayer):
             if value <= alpha:
                 break
             beta = min(beta, value)
-            #print("copyboard", copy_of_board)
         print("column:", column, "minimax_value:", minimax_value)
         return column, value
