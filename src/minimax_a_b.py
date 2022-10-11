@@ -94,7 +94,7 @@ def minimax(board, depth, alpha, beta, maxplayer):
             return None, 3000  # kokeilu, jotta suosii matalan syvyyksien voittoja
         return None, 2000
     if terminal_node == 1:
-        if depth == 5:
+        if depth == 4:
             return None, -3000
         return None, -2000
     if terminal_node == -1:

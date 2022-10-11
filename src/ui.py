@@ -7,9 +7,31 @@ import minimax_a_b
 # TODO:
 # neliöiden sijaan circles
 # näytölle myös ohjeet ja kommentit jotka atm terminaaliin
-# pelilaudan piirrosta, initialize jutuista ainakin erilliset funktiot
 # tehostus minimaxiin syvyyksien aikaa mittaamalla jos ehdin
 
+def draw_board(board, screen, margin, width, height):
+
+    white = (255, 255, 255)
+    red = (255, 0, 0)
+    blue = (0, 0, 255)
+    grey = (127, 127, 127)
+    screen.fill(grey)
+    for row in range(6):
+        for column in range(7):
+            color = white
+            if board[row][column] == 1:
+                color = blue
+            elif board[row][column] == 2:
+                color = red
+            pygame.draw.rect(screen,
+                                color,
+                                [(margin + width) * column + margin,
+                                (margin + height) * row + margin,
+                                width,
+                                height]
+                            )
+               
+    pygame.display.update()
 
 def ui_pygame():
     """ Pygame graafinen käyttöjärjestelmä
@@ -19,17 +41,12 @@ def ui_pygame():
         https://dr0id.bitbucket.io/legacy/pygame_tutorial00.html
         https://pygame.readthedocs.io/en/latest/1_intro/intro.html
     """
-    white = (255, 255, 255)
-    red = (255, 0, 0)
-    blue = (0, 0, 255)
-    grey = (127, 127, 127)
 
     width = 80
     height = 80
     margin = 20
 
     board = functions.create_the_board()
-
     pygame.init()
 
     window_size = [720, 650]
@@ -68,21 +85,7 @@ def ui_pygame():
                         game_over = True
                     turn = functions.change_turn(turn)
 
-# pelilaudan piirto
-            for row in range(6):
-                for column in range(7):
-                    color = white
-                    if board[row][column] == 1:
-                        color = blue
-                    elif board[row][column] == 2:
-                        color = red
-                    pygame.draw.rect(screen,
-                                     color,
-                                     [(margin + width) * column + margin,
-                                      (margin + height) * row + margin,
-                                      width,
-                                      height])
-            pygame.display.update()
+            draw_board(board, screen, margin, width, height)
 
         if turn == ai_player and game_over is False:
             column, minimax_value = minimax_a_b.minimax(
@@ -103,22 +106,8 @@ def ui_pygame():
                     game_over = True
             turn = functions.change_turn(turn)
 
-        screen.fill(grey)
-# pelilaudan piirto
-        for row in range(6):
-            for column in range(7):
-                color = white
-                if board[row][column] == 1:
-                    color = blue
-                elif board[row][column] == 2:
-                    color = red
-                pygame.draw.rect(screen,
-                                 color,
-                                 [(margin + width) * column + margin,
-                                  (margin + height) * row + margin,
-                                  width,
-                                  height])
-        pygame.display.update()
+        draw_board(board, screen, margin, width, height)
+
     pygame.quit()
 
 

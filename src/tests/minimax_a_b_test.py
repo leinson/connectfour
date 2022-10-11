@@ -2,8 +2,6 @@ import unittest
 import functions
 import minimax_a_b
 
-# TODO:
-# Minimaxin testaus
 
 class TestMiniMax(unittest.TestCase):
     def setUp(self):
@@ -18,7 +16,7 @@ class TestMiniMax(unittest.TestCase):
      
     def test_minimax_wins_in_column(self):
         for i in range(3):
-            self.board[i+2][2] = 2
+            self.board[i+3][2] = 2
     
         column, minimax_value = minimax_a_b.minimax(self.board, 6, -10000000000, +100000000000, True )
         self.assertEqual(2, column)
@@ -31,22 +29,75 @@ class TestMiniMax(unittest.TestCase):
         self.board[5][4] = 1
         self.board[4][4] = 2
         self.board[3][4] = 1
+        self.board[5][2] = 2
+        self.board[5][3] = 2
+        self.board[4][3] = 1
+        self.board[5][0] = 1
         column, minimax_value = minimax_a_b.minimax(self.board, 6, -10000000000, +100000000000, True )
         self.assertEqual(4, column)
 
-    # def test_minimax_wins_in_diagonal2(self):
-    #     pass
+    def test_minimax_wins_in_diagonal2(self):
+        for i in range(3):
+            self.board[i+3][i+2] = 2
+        self.board[5][2] = 2
+        self.board[5][3] = 1
+        self.board[5][1] = 1
+        self.board[4][2] = 1
+        self.board[5][3] = 1
+        self.board[4][1] = 2
+        self.board[3][1] = 1
+
+        column, minimax_value = minimax_a_b.minimax(self.board, 6, -10000000000, +100000000000, True )
+        self.assertEqual(1, column)
+
     
-    # def test_minimax_blocks_opposite_win_in_row(self):
-    #     pass
-    # def test_minimax_blocks_opposite_win_in_column(self):
-    #     pass
-    # def test_minimax_blocks_opposite_win_in_diagonal1(self):
-    #     pass
-    # def test_minimax_blocks_opposite_win_in_diagonal2(self):
-    #     pass
-# tee testejä pelitilanteissa, missä siirto, minkä minimaxin pitäisi tehdä on selvä.
-# eli testaus, että minimax valitsee paikkansa oikein
+    def test_minimax_blocks_opposite_win_in_row(self):
+        for i in range(3):
+            self.board[5][i+3] = 1
+        self.board[5][0] = 2
+        self.board[5][2] = 2
+        column, minimax_value = minimax_a_b.minimax(self.board, 6, -10000000000, +100000000000, True )
+        self.assertEqual(6, column)
+
+    def test_minimax_blocks_opposite_win_in_column(self):
+        for i in range(3):
+            self.board[i+3][2] = 1
+        self.board[5][0] = 2
+        self.board[5][1] = 2
+        column, minimax_value = minimax_a_b.minimax(self.board, 6, -10000000000, +100000000000, True )
+        self.assertEqual(2, column)
+    
+    def test_minimax_blocks_opposite_win_in_diagonal1(self):
+        row = 5
+        for i in range(3):
+            self.board[row][i+1] = 1
+            row -= 1
+        self.board[5][4] = 2
+        self.board[4][4] = 1
+        self.board[3][4] = 2
+        self.board[5][2] = 1
+        self.board[5][3] = 1
+        self.board[4][3] = 2
+        self.board[5][0] = 2
+        column, minimax_value = minimax_a_b.minimax(self.board, 6, -10000000000, +100000000000, True )
+        self.assertEqual(4, column)
+    
+    def test_minimax_blocks_opposite_win_in_diagonal2(self):
+        for i in range(3):
+            self.board[i+3][i+2] = 1
+        self.board[5][2] = 1
+        self.board[5][3] = 2
+        self.board[5][1] = 2
+        self.board[4][2] = 2
+        self.board[5][3] = 2
+        self.board[4][1] = 1
+        self.board[3][1] = 2
+
+        column, minimax_value = minimax_a_b.minimax(self.board, 6, -10000000000, +100000000000, True )
+        self.assertEqual(1, column)
+
+    def test_minimax_when_board_full(self):
+        pass
 
 class TestMinimaxHelpFunctions(unittest.TestCase):
     """
