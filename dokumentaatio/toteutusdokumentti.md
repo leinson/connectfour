@@ -4,9 +4,9 @@ kesken.
 
 ### Ohjelman yleisrakenne
 
-Ohjelma koostuu tällä hetkellä kahdesta kokonaisuudesta: käyttöliittymä ja sovelluslogiikka. Käyttöliittymä on toteutettu Pygamella tiedostossa ui.py, ja tällä tässä luontivaiheessa on käytössä myös komentorivillä käytettävää käyttöliittymää tiedostossa index.py. Sovelluslogiikka on toteutettu tiedostoon functions.py, joka nimensä mukaisesti sisältää funktioita ja metodeja joita kutsutaan käyttöliittymän kautta tai niiden sisältä. 
+Ohjelma koostuu tällä hetkellä kahdesta kokonaisuudesta: käyttöliittymä ja sovelluslogiikka. Käyttöliittymä on toteutettu Pygamella tiedostossa ui.py. Sovelluslogiikka on toteutettu tiedostoon functions.py ja minimax.py. Functions.py kutsutaan käyttöliittymästä, ja minimax.py funktioita kutsutaan functions.py funktioista. Nämä molemmat sisältää funktioita ja metodeja joita kutsutaan käyttöliittymän kautta tai niiden sisältä. 
 
-Ohjelmassa käyttäjä pelaa tietokoneen tekoälyä vastaan. Käyttäjä valitsee sarakkeen, johon pudottaa oman nappulansa. Tekoäly hyödyntää minimax algoritmia (myöhemmin alfa-beta lisätään) valitsemaan oman siirtonsa. Ohjelma tarkistaa jokaisen syötön jälkeen, onko voittoa havaittavissa. Jos on voitto, peli päättyy. 
+Ohjelmassa käyttäjä pelaa tietokoneen tekoälyä vastaan. Käyttäjä valitsee sarakkeen, johon pudottaa oman nappulansa. Tekoäly hyödyntää minimax algoritmia valitsemaan oman siirtonsa. Ohjelma tarkistaa jokaisen syötön jälkeen, onko voittoa havaittavissa. Jos on voitto, peli päättyy. 
 
 ### Saavutetut aika- ja tilavaativuudet (m.m. O-analyysit pseudokoodista)
 Suorituskyky- ja O-analyysivertailu (mikäli työ vertailupainotteinen)
@@ -15,6 +15,9 @@ Aikavaativuus mitä yritin tavoittella, oli .... Saavutin oman arvioni mukaan ..
 Tilavaativuudeesta: kyseessä on rekursiivinen algoritmi, joka ei vaadi varsinaisesti staattista isoa tietorakennetta vaan varaa dynaamisesti muistista tilaa sen edetessä, ja vapauttaa tilaa purkautuessa. Alfa-beta karsinnan myötä rekursion suuruuttakin saadaan rajoitettua. Varsinaista tilavaativuutta en pseudokoodeista algoritmille löytänyt.
 
 ### Työn mahdolliset puutteet ja parannusehdotukset
+
+- Minimax algoritmia voisi vielä tehostaa paremmalla heurestiikalla. Lisäksi voisi rajata haun syvyyttä ottamalla huomioon yhden kerroksen keston, ja katkaisemalla minimax sen jälkeen, kun yhden kerroksen suorittaminen kestää esimerkiksi yli 10sek.
+- Käyttöliittymää voisi parantaa antamalla käyttäjälle mahdollisuus valita vaikeustason ja pelin uudelleenkäynnistämisen ohjelman sisällä.
 
 
 ### Lähteet

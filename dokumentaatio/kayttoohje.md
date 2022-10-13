@@ -4,16 +4,13 @@
 
 - Lataa ohjelma esimerkiksi zip-pakettina omalle koneellesi.
 - Riippuvuudet asennetaan ennen sovelluksen käynnistämistä komennolla: `poetry install`
-- Sovelluksen käynnistäminen tehdään komennolla: `poetry run invoke ui`
-- Sovelluksen komentorivikäyttöliittymän käynnistäminen: `poetry run invoke start`
+- Sovelluksen käynnistäminen tehdään komennolla: `poetry run invoke start`
 
 ### ConnectFour pelaaminen
 
 - Peli noudattaa Connect Four- pelin perinteisiä sääntöjä. Voittoon vaaditaan 4 omaa nappulaa vierekkäin. Tämän voi tehdä pysty-, vaaka-, tai diagonaalisuunnassa.
 - Graafisessa käyttöliittymässä pääset heti pelinäkymään. Valitset hiiren painalluksella, mihin sarakkeeseen haluat pudottaa nappulasi. Tämän jälkeen tekoäly tekee oman siirronsa, jonka jälkeen on jälleen sinun vuorosi. 
 - Peli jatkuu, kunnes lauta on täynnä tai jompikumpi voittaa.
-
-- Komentorivillä toimivassa versiossa seuraat terminaalissa näkyviä ohjeita.
 
 ### Sovelluksesta poistuminen
 
