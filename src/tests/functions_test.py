@@ -2,6 +2,7 @@ import unittest
 import functions
 import numpy as np
 
+
 class TestFunctions(unittest.TestCase):
     """Testataan functions.py yleisiä metodeja.
 
