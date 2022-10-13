@@ -4,7 +4,7 @@ kesken.
 
 ### Ohjelman yleisrakenne
 
-Ohjelma koostuu tällä hetkellä kahdesta kokonaisuudesta: käyttöliittymä ja sovelluslogiikka. Käyttöliittymä on toteutettu Pygamella tiedostossa ui.py. Sovelluslogiikka on toteutettu tiedostoon functions.py ja minimax.py. Functions.py kutsutaan käyttöliittymästä, ja minimax.py funktioita kutsutaan functions.py funktioista. Nämä molemmat sisältää funktioita ja metodeja joita kutsutaan käyttöliittymän kautta tai niiden sisältä. 
+Ohjelma koostuu tällä hetkellä kahdesta kokonaisuudesta: käyttöliittymä ja sovelluslogiikka. Käyttöliittymä on toteutettu Pygamella tiedostossa ui.py. Sovelluslogiikka on toteutettu tiedostoon functions.py ja minimax.py. Functions.py ja minimax.py funktioita kutsutaan käyttöliittymästä, ja minimax.py tiedostosta kutsutaan lisäksi functions.py funktioita. 
 
 Ohjelmassa käyttäjä pelaa tietokoneen tekoälyä vastaan. Käyttäjä valitsee sarakkeen, johon pudottaa oman nappulansa. Tekoäly hyödyntää minimax algoritmia valitsemaan oman siirtonsa. Ohjelma tarkistaa jokaisen syötön jälkeen, onko voittoa havaittavissa. Jos on voitto, peli päättyy. 
 

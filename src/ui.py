@@ -33,11 +33,10 @@ def draw_board(board, screen, margin, width, height):
     pygame.display.update()
 
 def ui_pygame(screen):
-    """ Pygame graafinen käyttöjärjestelmä
+    """ Pygame graafinen käyttöjärjestelmä, ai aloittaa.
         Oikean sarakkeen painaminen tiputtaa nappulan kyseiseen sarakkeeseen.
         Voitto tulostuu tällä hetkellä terminaaliin.
     """
-   
     board = functions.create_the_board()
     done = False
     width = 80
@@ -45,19 +44,16 @@ def ui_pygame(screen):
     margin = 20
     player = 0
     ai_player = 1
-    turn = player
+    turn = ai_player
     game_over = False
+    turn_counter = 0
 
     while not done:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
 
-            if game_over is False and functions.get_possible_columns(board) == []:
-                print("pelilauta täynnä, tasapeli!")
-                game_over = True
-
-            elif event.type == pygame.MOUSEBUTTONDOWN and turn == player and game_over is False:
+            if event.type == pygame.MOUSEBUTTONDOWN and turn == player and game_over is False:
                 position = pygame.mouse.get_pos()
                 column = position[0] // (width + margin)
                 row = position[1] // (height + margin)
@@ -73,12 +69,17 @@ def ui_pygame(screen):
                         print("Sinä voitit!")
                         game_over = True
                     turn = functions.change_turn(turn)
+                
+                turn_counter += 1
+                if turn_counter == 21 and is_win == False:
+                    game_over = True
+                    print("Tasapeli")
 
             draw_board(board, screen, margin, width, height)
 
         if turn == ai_player and game_over is False:
             column, minimax_value = minimax_a_b.minimax(
-                board, 6, -100000000000, +100000000000, True)
+                board, 1, -100000000000, +100000000000, True)
             print("FINALcolumn:", column, "value", minimax_value)
             if board[0][column] == 0:
                 row = functions.next_empty_row(board, column)
@@ -88,9 +89,8 @@ def ui_pygame(screen):
                     print("AI voitti!")
                     game_over = True
             else:
-                if functions.get_possible_columns(board) == []:
-                    print("lauta täynnä, tasapeli")
-                    game_over = True
+                print("lauta täynnä, tasapeli")
+                game_over = True
             turn = functions.change_turn(turn)
 
         draw_board(board, screen, margin, width, height)

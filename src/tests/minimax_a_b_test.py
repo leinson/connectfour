@@ -1,3 +1,4 @@
+import numpy as np
 import unittest
 import functions
 import minimax_a_b
@@ -97,7 +98,22 @@ class TestMiniMax(unittest.TestCase):
         self.assertEqual(1, column)
 
     def test_minimax_when_board_full(self):
-        pass
+        """
+        Koska AI aloittaa, AI:n siirto ei ole ikinä viimeinen täydessä laudassa.
+        Eli minimaxia ei ikinä kutsuta, kun lauta on täynnä.
+        Tämä testaa että minimax toimii, kun copyboardit täyttyvät.
+
+        """
+        board = np.array([
+            [1,2,1,2,1,0,0],
+            [1,2,1,2,1,2,1],
+            [2,1,2,1,2,1,2],
+            [2,1,2,1,2,1,2],
+            [1,2,1,2,1,2,1],
+            [1,2,1,2,1,2,1]])
+        column, minimax_value = minimax_a_b.minimax(board, 6, -10000000000, +100000000000, True )
+        self.assertEqual(5,column)
+
 
 class TestMinimaxHelpFunctions(unittest.TestCase):
     """
@@ -132,11 +148,7 @@ class TestMinimaxHelpFunctions(unittest.TestCase):
         for i in range(0, 4):
             self.board[3][i] = 1
         self.assertEqual(minimax_a_b.check_if_terminal_node(self.board), 1)
-        self.board[3][2] = 0
-        for i in range(7):
-            self.board[0][i] = 3
-        self.assertEqual(minimax_a_b.check_if_terminal_node(self.board), -1)
-
+        
     def test_heuristic_row_win(self):
         self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), 0)
         for i in range(4):
