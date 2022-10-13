@@ -50,7 +50,6 @@ def heuristic_value(board, chip):
             if board[row][col] == others_chip and board[row+1][col+1] == others_chip and board[row+2][col+2] == others_chip and board[row+3][col+3] == others_chip:
                 value -= 100
 
-    #print("value", value)
     return value
 
 
@@ -63,14 +62,11 @@ def check_if_terminal_node(board):
         boolean: onko lopputapaus / ei enää siirtomahdollisuuksia vai ei
     """
     node = False
-    
     if functions.check_if_win(board, 1, (-1, -1)) is True:
         node = 2
-    elif functions.check_if_win(board, 0, (-1, -1)) is True:
-        node = 1
     else:
-        if functions.get_possible_columns(board) == []:
-            node = -1
+        if functions.check_if_win(board, 0, (-1, -1)) is True:
+            node = 1
     return node
 
 
@@ -84,28 +80,24 @@ def minimax(board, depth, alpha, beta, maxplayer):
     Returns:
         tuple: sarake sekä minimax-arvo
     """
-    possible_columns = functions.get_possible_columns(board)
     terminal_node = check_if_terminal_node(board)
-
-    chip = 2
-    # siirrä ehtoja terminal node funktioon, siistimpi, depth parametriks?
     if terminal_node == 2:
         if depth == 5:
-            return None, 3000  # kokeilu, jotta suosii matalan syvyyksien voittoja
+            return None, 3000
         return None, 2000
     if terminal_node == 1:
         if depth == 4:
             return None, -3000
         return None, -2000
-    if terminal_node == -1:
-        # vaihda tämä tarkistus siirtolaskuriksi kts.alla?
-        return None, 0
+        
     if depth == 0:
-        return (None, heuristic_value(board, chip))
+        return (None, heuristic_value(board, 2))
+    
+    possible_columns = functions.get_possible_columns(board)
+    if possible_columns == []:
+        return None, 0
 
     if maxplayer:
-        # siirtolaskuri joka laskee siirrot 6x7, tarkistus alussa,
-        # jotta voi poistaa turhat get possible columns funktiokutsut?
         value = -1000000000000
         for move in possible_columns:
             copy_of_board = board.copy()

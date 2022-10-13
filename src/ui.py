@@ -7,7 +7,6 @@ import minimax_a_b
 # TODO:
 # neliöiden sijaan circles
 # näytölle myös ohjeet ja kommentit jotka atm terminaaliin
-# tehostus minimaxiin syvyyksien aikaa mittaamalla jos ehdin
 
 def draw_board(board, screen, margin, width, height):
 
@@ -33,27 +32,17 @@ def draw_board(board, screen, margin, width, height):
                
     pygame.display.update()
 
-def ui_pygame():
+def ui_pygame(screen):
     """ Pygame graafinen käyttöjärjestelmä
         Oikean sarakkeen painaminen tiputtaa nappulan kyseiseen sarakkeeseen.
         Voitto tulostuu tällä hetkellä terminaaliin.
-        Pelilaudan rakentamiseen otettu inspiraatiota ja ohjeita seuraavista lähteistä:
-        https://dr0id.bitbucket.io/legacy/pygame_tutorial00.html
-        https://pygame.readthedocs.io/en/latest/1_intro/intro.html
     """
-
+   
+    board = functions.create_the_board()
+    done = False
     width = 80
     height = 80
     margin = 20
-
-    board = functions.create_the_board()
-    pygame.init()
-
-    window_size = [720, 650]
-    screen = pygame.display.set_mode(window_size)
-    pygame.display.set_caption("ConnectFour")
-    done = False
-
     player = 0
     ai_player = 1
     turn = player
@@ -90,8 +79,6 @@ def ui_pygame():
         if turn == ai_player and game_over is False:
             column, minimax_value = minimax_a_b.minimax(
                 board, 6, -100000000000, +100000000000, True)
-            # minimoija jatkaa samalla listalla, vain max muuttaa
-            # tsekkaa aika, järjestä lista? siirrä tänne? anna minimaxille parametrina järjestyslistasyvyys vaihda i.
             print("FINALcolumn:", column, "value", minimax_value)
             if board[0][column] == 0:
                 row = functions.next_empty_row(board, column)
@@ -110,5 +97,3 @@ def ui_pygame():
 
     pygame.quit()
 
-
-ui_pygame()
