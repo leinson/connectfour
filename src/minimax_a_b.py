@@ -53,20 +53,25 @@ def heuristic_value(board, chip):
     return value
 
 
-def check_if_terminal_node(board):
+def check_if_terminal_node(board, depth):
     """
     Tarkistaa, onko kyseessä lopputapaus tai onko voittoa.
     Args:
         board (array): pelilauta
+        depth (int): syvyys
     Returns:
-        boolean: onko lopputapaus / ei enää siirtomahdollisuuksia vai ei
+        tuple or False: onko lopputapaus eli voitto
     """
     node = False
     if functions.check_if_win(board, 1, (-1, -1)) is True:
-        node = 2
+        node = None, 2000
+        if depth == 5:
+            node = None, 3000
     else:
         if functions.check_if_win(board, 0, (-1, -1)) is True:
-            node = 1
+            node = None, -2000
+            if depth == 4:
+                node = None, -3000
     return node
 
 
@@ -80,21 +85,15 @@ def minimax(board, depth, alpha, beta, maxplayer):
     Returns:
         tuple: sarake sekä minimax-arvo
     """
-    terminal_node = check_if_terminal_node(board)
-    if terminal_node == 2:
-        if depth == 5:
-            return None, 3000
-        return None, 2000
-    if terminal_node == 1:
-        if depth == 4:
-            return None, -3000
-        return None, -2000
-        
+    terminal_node = check_if_terminal_node(board, depth)
+    if terminal_node is not False:
+        return terminal_node
+
     if depth == 0:
         return (None, heuristic_value(board, 2))
-    
+
     possible_columns = functions.get_possible_columns(board)
-    if possible_columns == []:
+    if not possible_columns:
         return None, 0
 
     if maxplayer:
@@ -110,7 +109,6 @@ def minimax(board, depth, alpha, beta, maxplayer):
             if value >= beta:
                 break
             alpha = max(alpha, value)
-        print("column:", column, "minimax_value:", minimax_value)
         return column, value
 
     else:  # miniplayer
@@ -126,5 +124,4 @@ def minimax(board, depth, alpha, beta, maxplayer):
             if value <= alpha:
                 break
             beta = min(beta, value)
-        print("column:", column, "minimax_value:", minimax_value)
         return column, value

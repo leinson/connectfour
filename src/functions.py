@@ -28,6 +28,7 @@ def choose_column(column, matrix):
         row_counter -= 1
     return False
 
+
 def check_if_win(matrix, turn, row_column):
     """ Tarkistetaan, onko voittoriviä. Valitaan, kenen nappuloita katsotaan.
     Args:
@@ -125,4 +126,3 @@ def next_empty_row(board, column):
     for row in range(5, -1, -1):
         if board[row][column] == 0:
             return row
-
