@@ -5,19 +5,20 @@ import minimax_a_b
 
 
 def draw_board(board, screen, margin, width, height, text):
-    font = pygame.font.SysFont("monospace", 35, True)
-    white = (255, 255, 255)
-    red = (255, 0, 0)
-    blue = (0, 0, 255)
-    grey = (127, 127, 127)
-    screen.fill(grey)
+    font = pygame.font.Font("src/assets/PlaymegamesReguler-2OOee.ttf", 50)
+    empty_slots_color = (229, 204, 255)
+    ai_color = (255, 153, 51)
+    player_color = (153, 51, 255)
+    background = (51, 0, 102)
+    text_color = (153, 51, 255)
+    screen.fill(background)
     for row in range(6):
         for column in range(7):
-            color = white
+            color = empty_slots_color
             if board[row][column] == 1:
-                color = blue
+                color = player_color
             elif board[row][column] == 2:
-                color = red
+                color = ai_color
             pygame.draw.rect(screen,
                              color,
                              [(margin + width) * column + margin,
@@ -26,8 +27,8 @@ def draw_board(board, screen, margin, width, height, text):
                                  height]
                              )
 
-    label = font.render(text, 1, blue)
-    screen.blit(label, (30, 620))
+    label = font.render(text, 1, text_color)
+    screen.blit(label, (120, 625))
 
     pygame.display.update()
 
@@ -47,7 +48,7 @@ def ui_pygame(screen):
     turn = ai_player
     game_over = False
     turn_counter = 0
-    text = ""
+    text = "  . : I CONNECT FOUR I : ."
     while not done:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -62,19 +63,19 @@ def ui_pygame(screen):
 
                 insert_chip = functions.choose_column(column, board)
                 if insert_chip is False:
-                    text = "Täynnä, valitse toinen sarake."
+                    text = "Valitse toinen sarake."
                 else:
                     is_win = functions.check_if_win(board, turn, insert_chip)
                     if is_win is True:
-                        text = "Sinä voitit!"
+                        text = "OLET VOITTAJA !"
                         game_over = True
-                    text = ""
+                    text = "  . : I CONNECT FOUR I : ."
                     turn = functions.change_turn(turn)
 
                     turn_counter += 1
                     if turn_counter == 21 and is_win is False:
                         game_over = True
-                        text = "Tasapeli"
+                        text = "Tasapeli - GAME OVER"
 
                 draw_board(board, screen, margin, width, height, text)
 
@@ -86,10 +87,10 @@ def ui_pygame(screen):
                 board[row][column] = 2
                 is_win = functions.check_if_win(board, turn, (row, column))
                 if is_win is True:
-                    text = "AI voitti!"
+                    text = "AI VOITTI ! GAME OVER"
                     game_over = True
             else:
-                text = "Tasapeli"
+                text = "Tasapeli - GAME OVER"
                 game_over = True
             turn = functions.change_turn(turn)
 
