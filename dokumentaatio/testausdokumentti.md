@@ -5,7 +5,7 @@ Ohjelmaa on testattu sekä manuaalisesti että automatisoiduilla yksikkötesteil
 ## Yksikkötestaus
 
 ### Sovelluslogiikan testaus
-Sovelluslogiikasta vastaavat tiedostot ovat functions ja minimax_a_b. Näiden tiedostojen metodit ovat jaettu eri testiluokkiin tiedostoihin *functions_test.py*: TestFunctions ja TestCheckIfWin, ja *minimax_a_b_test.py*: TestMiniMax ja TestMiniMaxHelpFunctions.
+Sovelluslogiikasta vastaavat tiedostot ovat functions ja minimax_a_b. Näiden tiedostojen metodit ovat jaettu eri testiluokkiin tiedostoihin **functions_test.py**: TestFunctions ja TestCheckIfWin, ja **minimax_a_b_test.py**: TestMiniMax ja TestMiniMaxHelpFunctions.
 
 Mitä on testattu, miten tämä tehtiin?
 
@@ -22,7 +22,7 @@ Testikattavuuden laskemiseen on käytetty Coverage työkalua, joka luo yksikköt
 Testikattavuuden saa suoritettua testien suorittamisen jälkeen komennolla `poetry run coverage-report`. 
 Testauksen haarautumakattavuus on tällä hetkellä 98%. Kattavuus lasketaan functions.py ja minimax_a_b.py tiedostoista. 
 
-![](./testikattavuus/coveragereport7oct.png)
+![](./testikattavuus/coveragereport15oct.png)
 
 Yllä ajankohtainen testikattavuus. Näet viikkottaiset testikattavuusraportit dokumentaatio-kansion alakansiosta testikattavuus.
 
