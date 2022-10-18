@@ -5,41 +5,42 @@ Ohjelmaa on testattu sekä manuaalisesti että automatisoiduilla yksikkötesteil
 ## Yksikkötestaus
 
 ### Sovelluslogiikan testaus
-Sovelluslogiikasta vastaavat tiedostot ovat functions ja minimax_a_b. Näiden tiedostojen metodit ovat jaettu eri testiluokkiin tiedostoihin **functions_test.py**: TestFunctions ja TestCheckIfWin, ja **minimax_a_b_test.py**: TestMiniMax ja TestMiniMaxHelpFunctions.
 
-Mitä on testattu, miten tämä tehtiin?
+Ohjelmassa on testattu sovelluslogiikasta vastaavaa koodia. Sovelluslogiikasta vastaavat tiedostot ovat functions ja minimax_a_b. Näiden tiedostojen metodit ovat jaettu eri testiluokkiin tiedostoihin **functions_test.py**: TestFunctions ja TestCheckIfWin, ja **minimax_a_b_test.py**: TestMiniMax ja TestMiniMaxHelpFunctions.
 
-Testejä on pyritty tekemään mahdollisimman kattavasti. Jokaiselle funktiolle on tehty jokin testi, ja joillekin isommille funktioille on tehty useita testejä. 
-
-Minkälaisilla syötteillä testaus tehtiin (vertailupainotteisissa töissä tärkeää)?
-
-Miten testit voidaan toistaa?
 Testit ajetaan komennolla `poetry run invoke test`. Tämä komento suorittaa kaikki yksikkötestit, ja tuloste muodostuu terminaaliin onnistuneista (tai epäonnistuneista) testeistä. 
 
-### Testauskattavuus
+Yksikkötestit ovat tehty Unittest-työkalulla. Tämän avulla on luotu testejä, jotka testaavat tiettyä toiminnallisuutta, tietystä funktiosta, tietyllä syötteellä. Testejä on pyritty tekemään mahdollisimman kattavasti, lisätietoa testikattavuudesta alla. Jokaiselle funktiolle on tehty jokin testi, ja usealle funktioille on tehty monia testejä. Useat testit samasta funktiosta ovat tarpeellisia, kun esimerkiksi saatu syöte muuttaa funktion toimintaa vaikka ehtolausekkeiden kautta. Monia testejä luodessa on testattu myös virheellistä vertailua varmistamaan, että läpi mennyt testi oikeasti tarkoittaa, että testattu toiminnallisuus toimii oikein. 
+
+Testeissä ei olla testattu jokaista erilaista tapaa saada voittoa, koska tämä veisi runsaasti aikaa. Sen sijaan on yritetty monipuolistaa eri testien lautasyötteitä, varioiden riviä ja sarakkeita, missä voitto on. Esimerkiksi kaikki voittotestit eivät ala ruudusta (0,0). Syötteet, joilla testejä on suoritettu, näkyvät yksikkötesteissä.
+
+KUVA
+
+Yllä kuvakaappaus, kun testit on ajettu. Testien suorittaminen vie noin ___ sekuntia. 
+
+### Testikattavuus
 
 Testikattavuuden laskemiseen on käytetty Coverage työkalua, joka luo yksikkötestien pohjalta testikattavuusraportin html-tiedostoon. 
 Testikattavuuden saa suoritettua testien suorittamisen jälkeen komennolla `poetry run coverage-report`. 
-Testauksen haarautumakattavuus on tällä hetkellä 98%. Kattavuus lasketaan functions.py ja minimax_a_b.py tiedostoista. 
+Testauksen haarautumakattavuus on tällä hetkellä 98%. Testikattavuus lasketaan functions.py ja minimax_a_b.py tiedostoista. 
 
 ![](./testikattavuus/coveragereport15oct.png)
 
-Yllä ajankohtainen testikattavuus. Näet viikkottaiset testikattavuusraportit dokumentaatio-kansion alakansiosta testikattavuus.
+Yllä kuva ajankohtaisesta testikattavuudesta. Viikkottaiset testikattavuusraportit sijaitsevat dokumentaatio-kansion alakansiossa testikattavuus.
 
 Käyttöliittymä on ohjeiden mukaisesti jätetty testikattavuuden ulkopuolelle.
 
 #### Suorituskykytestaus
-Varsinaista suorituskykytestausta en erikseen toteuttanut. Havainnoin kuitenkin itse manuaalisesti testejä ja ohjelmaa suorittaessa, minkä verran tekoälyn siirto kestää. Tämän vuoksi valitsinkin syvyyden 6, koska en kertaakaan tullut tilanteeseen, missä tekoäly olisi laskelmoinut seuraavaa siirtoaan enemmän kuin 10 sek. Sen ajan koin, että käyttäjä jaksaa odottaa tekoälyn siirtoa.
-
-### Järjestelmätestaus
-Järjestelmätestausta on suoritettu manuaalisesti. 
+Varsinaista suorituskykytestausta ei ole erikseen toteutettu. Havainnointia on kuitenkin tehty manuaalisesti testejä ja ohjelmaa suorittaessa, minkä verran tekoälyn siirto kestää. Tämän vuoksi syvyys 6 valikoitui, koska kertaakaan ei tullut tilannetta, missä tekoäly olisi laskelmoinut seuraavaa siirtoaan enemmän kuin 10 sek. Tämän ajan käyttäjä jaksaa todennäköisesti odottaa tekoälyn siirtoa.
 
 ### Asennus
 Sovellusta on testattu Linux-ympäristössä, missä sovellus on kehitetty. Täten sovellus on todettu toimivaksi Linuxissa, muissa ympäristöissä sovellusta ei ole testattu.
 
 ## Manuaalinen testaus
-print tulostukset, pelin pelaaminen ja havainnointi, parametrien ja muuttujien hienosäädöt
+Ohjelmaa on testattu runsaasti manuaalisesti läpi ohjelman kehityksen. Print tulostuksia terminaaliin on ollut käytössä lähes jokaisessa funktiossa jossain vaiheessa kehityksen aikana. Minimax-funktion rekursiota on mm. tällä tavalla seurattu, ja tulosteissa päästy näkemään miten funktio poimii heurestiikasta annettuja arvoja.
 
-### Toiminnallisuudet ja sovellukseen jääneet laatuongelmat 
+Peliä on myös pelattu testimielessä alusta lähtien. Peliä on yritetty pelata mahdollisimman monipuolisesti, antaen tekoälyn voittaa tyhmillä siirroilla, ja yrittäen parhaimmalla tavalla voittaa tekoälyn. Samalla on havainnoitu tapaa, miten tekoäly valitsee siirtojaan ja verrattu niitä print tulosteisiin heurestiikan tuloksista - valitseeko tekoäly varmasti parhaimman mahdollisen sijainnin sen perusteella, mitä tietoja sillä on. 
 
-kts yst toteutusdokumentti
+## Toiminnallisuudet ja sovellukseen jääneet laatuongelmat 
+
+Testejä voisi vielä laajentaa kattamaan runsaampia määriä esimerkillisiä lauta-tilanteita varmistamaan, että ohjelma varmasti toimii oikein erilaisissa tilanteissa. Katso ystävällisesti toteutusdokumentti muiden ongelmien / parannuksien suhteen. 
