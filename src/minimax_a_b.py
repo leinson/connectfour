@@ -2,7 +2,7 @@ import functions
 
 
 def heuristic_value(board, chip):
-    """Laskee pisteet terminal nodeissa.
+    """Laskee pisteet pelaajan ja AI:n 4- ja 3-rivissä terminal nodeissa.
     Args:
         board (array): pelilauta
         chip (int): pelinappula
@@ -14,42 +14,63 @@ def heuristic_value(board, chip):
     rows = 6
     others_chip = 1
 
-    # 4-rivissä
     for col in range(columns-3):
         for row in range(rows):
-            if board[row][col] == chip and board[row][col+1] == chip and board[row][col+2] == chip and board[row][col+3] == chip:
-                value += 200
+            if board[row][col] == chip and board[row][col+1] == chip and board[row][col+2] == chip:
+                if board[row][col+3] == chip:
+                    value += 200
+                else:
+                    value += 100
     for col in range(columns):
         for row in range(rows-3):
-            if board[row][col] == chip and board[row+1][col] == chip and board[row+2][col] == chip and board[row+3][col] == chip:
-                value += 200
+            if board[row][col] == chip and board[row+1][col] == chip and board[row+2][col] == chip:
+                if board[row+3][col] == chip:
+                    value += 200
+                else:
+                    value +=100
     for col in range(columns-3):
         for row in range(3, rows):
-            if board[row][col] == chip and board[row-1][col+1] == chip and board[row-2][col+2] == chip and board[row-3][col+3] == chip:
-                value += 200
+            if board[row][col] == chip and board[row-1][col+1] == chip and board[row-2][col+2] == chip:
+                if board[row-3][col+3] == chip:
+                    value += 200
+                else:
+                    value +=100
     for col in range(columns-3):
         for row in range(rows-3):
-            if board[row][col] == chip and board[row+1][col+1] == chip and board[row+2][col+2] == chip and board[row+3][col+3] == chip:
-                value += 200
+            if board[row][col] == chip and board[row+1][col+1] == chip and board[row+2][col+2] == chip:
+                if board[row+3][col+3] == chip:
+                    value += 200
+                else:
+                    value += 100
 
-    # vastustajan 4-rivissä
     for col in range(columns-3):
         for row in range(rows):
-            if board[row][col] == others_chip and board[row][col+1] == others_chip and board[row][col+2] == others_chip and board[row][col+3] == others_chip:
-                value -= 100
+            if board[row][col] == others_chip and board[row][col+1] == others_chip and board[row][col+2] == others_chip:
+                if board[row][col+3] == others_chip:
+                    value -= 100
+                else:
+                    value -= 50
     for col in range(columns):
         for row in range(rows-3):
-            if board[row][col] == others_chip and board[row+1][col] == others_chip and board[row+2][col] == others_chip and board[row+3][col] == others_chip:
-                value -= 100
+            if board[row][col] == others_chip and board[row+1][col] == others_chip and board[row+2][col] == others_chip:
+                if board[row+3][col] == others_chip:
+                    value -= 100
+                else:
+                    value -= 50
     for col in range(columns-3):
         for row in range(3, rows):
-            if board[row][col] == others_chip and board[row-1][col+1] == others_chip and board[row-2][col+2] == others_chip and board[row-3][col+3] == others_chip:
-                value -= 100
+            if board[row][col] == others_chip and board[row-1][col+1] == others_chip and board[row-2][col+2] == others_chip:
+                if board[row-3][col+3] == others_chip:
+                    value -= 100
+                else:
+                    value -= 50
     for col in range(columns-3):
         for row in range(rows-3):
-            if board[row][col] == others_chip and board[row+1][col+1] == others_chip and board[row+2][col+2] == others_chip and board[row+3][col+3] == others_chip:
-                value -= 100
-
+            if board[row][col] == others_chip and board[row+1][col+1] == others_chip and board[row+2][col+2] == others_chip:
+                if board[row+3][col+3] == others_chip:
+                    value -= 100
+                else:
+                    value -= 50
     return value
 
 

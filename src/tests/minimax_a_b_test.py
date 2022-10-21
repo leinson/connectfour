@@ -175,45 +175,45 @@ class TestMinimaxHelpFunctions(unittest.TestCase):
         self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), 0)
         for i in range(4):
             self.board[5][i] = 2
-        self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), 200)
+        self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), 300)
 
     def test_heuristic_opposite_player_row_win(self):
         self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), 0)
         for i in range(4):
             self.board[5][i] = 1
-        self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), -100)
+        self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), -150)
 
     def test_heuristic_column_win(self):
         for i in range(4):
             self.board[i][4] = 2
-        self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), 200)
+        self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), 300)
 
     def test_heuristic_opposite_player_column_win(self):
         self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), 0)
         for i in range(4):
             self.board[i][2] = 1
-        self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), -100)
+        self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), -150)
 
     def test_heuristic_diagonal1_win(self):
         row = 5
         for i in range(4):
             self.board[row][i] = 2
             row -= 1
-        self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), 200)
+        self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), 300)
 
     def test_heuristic_opposite_player_diagonal1_win(self):
         row = 5
         for i in range(4):
             self.board[row][i] = 1
             row -= 1
-        self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), -100)
+        self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), -150)
 
     def test_heuristic_diagonal2_win(self):
         for i in range(4):
             self.board[i][i] = 2
-        self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), 200)
+        self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), 300)
 
     def test_heuristic_opposite_player_diagonal2_win(self):
         for i in range(4):
             self.board[i][i] = 1
-        self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), -100)
+        self.assertEqual(minimax_a_b.heuristic_value(self.board, 2), -150)
