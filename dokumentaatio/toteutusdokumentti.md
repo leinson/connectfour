@@ -46,9 +46,9 @@ Ohjelmassa käyttäjä pelaa tietokoneen tekoälyä vastaan, joka on toteutettu 
 
 ### Saavutetut aika- ja tilavaativuudet (m.m. O-analyysit pseudokoodista)
 
-Aikavaativuus alpha-beta karsinnassa on yleisesti pseudokoodin mukaan pahimmassa tapauksessa O( $b^d$ ) (b= haarautuminen (branching factor) ja d=haun syvyys d vuorojen verran.), joka on siis sama kuin minimax funktion aikavaativuus. Koska olen kuitenkin optimoinut haarojen läpikäymistä käymällä sarakkeita keskeltä ulospäin, arvioin, että aikavaativuus on hyvin harvoin tuo minimaxin kaltainen. Tällöin kirjallisuuden mukaan, aikavaativuus onkin enemmän O( $\sqrt{b^d}$ ) luokkaa. 
+Aikavaativuus alpha-beta karsinnassa on yleisesti pseudokoodin mukaan pahimmassa tapauksessa O( $b^d$ ) (b= haarautuminen (branching factor) ja d=haun syvyys d vuorojen verran.), joka on siis sama kuin minimax funktion aikavaativuus. Koska olen kuitenkin optimoinut haarojen läpikäymistä käymällä sarakkeita keskeltä ulospäin, arvioin, että aikavaativuus on hyvin harvoin tuo minimaxin kaltainen. Tällöin kirjallisuuden mukaan, aikavaativuus onkin enemmän O( $\sqrt{b^d}$ ) luokkaa. Connect four pelissä on seitsemän saraketta johon voi tehdä siirron, jonka vuoksi b = haarautuminen on useimmiten 7. Toki silloin, kun pelilauta on täydempi, näitä haaroja tippuu pois. D = syvyydeksi tässä ohjelmassa on valikoitunut 6. Eli aikavaativuus on noin O( $\sqrt{7^6}$ )
 
-Tilavaativuudeesta: kyseessä on rekursiivinen algoritmi, joka ei vaadi varsinaisesti staattista isoa tietorakennetta vaan varaa dynaamisesti muistista tilaa sen edetessä, ja vapauttaa tilaa purkautuessa. Alfa-beta karsinnan myötä rekursion suuruuttakin saadaan rajoitettua. Varsinaista tilavaativuutta en pseudokoodeista algoritmille löytänyt.
+Tilavaativuudesta: kyseessä on rekursiivinen algoritmi, joka ei vaadi varsinaisesti staattista isoa tietorakennetta vaan varaa dynaamisesti muistista tilaa sen edetessä, ja vapauttaa tilaa purkautuessa. Alfa-beta karsinnan myötä rekursion suuruuttakin saadaan rajoitettua. Varsinaista tilavaativuutta en pseudokoodeista algoritmille löytänyt.
 
 Suorituskykyvertailu- ja testaus ei ollut tälle aiheelle oleellinen. 
 

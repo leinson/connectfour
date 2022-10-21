@@ -14,9 +14,7 @@ Yksikkötestit ovat tehty Unittest-työkalulla. Tämän avulla on luotu testejä
 
 Testeissä ei olla testattu jokaista erilaista tapaa saada voittoa, koska tämä veisi runsaasti aikaa. Sen sijaan on yritetty monipuolistaa eri testien lautasyötteitä, varioiden riviä ja sarakkeita, missä voitto on. Esimerkiksi kaikki voittotestit eivät ala ruudusta (0,0). Syötteet, joilla testejä on suoritettu, näkyvät yksikkötesteissä.
 
-KUVA
-
-Yllä kuvakaappaus, kun testit on ajettu. Testien suorittaminen vie noin ___ sekuntia. 
+Testien suorittaminen vie noin 4,5 sekuntia. 
 
 ### Testikattavuus
 
@@ -34,7 +32,7 @@ Käyttöliittymä on ohjeiden mukaisesti jätetty testikattavuuden ulkopuolelle.
 Varsinaista suorituskykytestausta ei ole erikseen toteutettu. Havainnointia on kuitenkin tehty manuaalisesti testejä ja ohjelmaa suorittaessa, minkä verran tekoälyn siirto kestää. Tämän vuoksi syvyys 6 valikoitui, koska kertaakaan ei tullut tilannetta, missä tekoäly olisi laskelmoinut seuraavaa siirtoaan enemmän kuin 10 sek. Tämän ajan käyttäjä jaksaa todennäköisesti odottaa tekoälyn siirtoa.
 
 ### Asennus
-Sovellusta on testattu Linux-ympäristössä, missä sovellus on kehitetty. Täten sovellus on todettu toimivaksi Linuxissa, muissa ympäristöissä sovellusta ei ole testattu.
+Sovellusta on testattu Linux-ympäristössä, missä sovellus on kehitetty. Täten sovellus on todettu toimivaksi Linuxissa. Muissa ympäristöissä sovellusta ei ole testattu.
 
 ## Manuaalinen testaus
 Ohjelmaa on testattu runsaasti manuaalisesti läpi ohjelman kehityksen. Print tulostuksia terminaaliin on ollut käytössä lähes jokaisessa funktiossa jossain vaiheessa kehityksen aikana. Minimax-funktion rekursiota on mm. tällä tavalla seurattu, ja tulosteissa päästy näkemään miten funktio poimii heurestiikasta annettuja arvoja.
