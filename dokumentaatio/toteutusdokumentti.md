@@ -57,7 +57,7 @@ Suorituskykyvertailu- ja testaus ei ollut tälle aiheelle oleellinen.
 
 - Minimax algoritmia voisi vielä tehostaa paremmalla heurestiikalla. Esimerkiksi ottamalla mukaan pisteytykset myös 3-rivissä siirroille.
 - Minimaxissa voisi myös rajata haun syvyyttä ottamalla huomioon yhden syvyyskerroksen keston, ja katkaisemalla minimax sen jälkeen, kun yhden kerroksen suorittaminen kestää esimerkiksi yli 10sek.
-- Käyttöliittymää voisi parantaa antamalla käyttäjälle mahdollisuus valita vaikeustaso ja pelin uudelleenkäynnistämisen ohjelman sisällä.
+- Käyttöliittymää voisi parantaa antamalla käyttäjälle mahdollisuus valita vaikeustaso.
 
 
 ### Lähteet

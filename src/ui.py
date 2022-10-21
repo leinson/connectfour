@@ -28,7 +28,10 @@ def draw_board(board, screen, margin, width, height, text):
                              )
 
     label = font.render(text, 1, text_color)
-    screen.blit(label, (120, 625))
+    if text == ". : I CONNECT FOUR I : .":
+        screen.blit(label, (150, 625))
+    else:
+        screen.blit(label, (30, 625))
 
     pygame.display.update()
 
@@ -48,11 +51,21 @@ def ui_pygame(screen):
     turn = ai_player
     game_over = False
     turn_counter = 0
-    text = "  . : I CONNECT FOUR I : ."
+    text = ". : I CONNECT FOUR I : ."
     while not done:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
+
+            if event.type == pygame.KEYDOWN and game_over is True:
+                if event.key == pygame.K_RETURN:
+                    board = functions.create_the_board()
+                    turn = ai_player
+                    turn_counter = 0
+                    text = ". : I CONNECT FOUR I : ."
+                    game_over = False
+                    draw_board(board, screen, margin, width, height, text)
+
 
             if event.type == pygame.MOUSEBUTTONDOWN and turn == player and game_over is False:
                 position = pygame.mouse.get_pos()
@@ -67,15 +80,15 @@ def ui_pygame(screen):
                 else:
                     is_win = functions.check_if_win(board, turn, insert_chip)
                     if is_win is True:
-                        text = "OLET VOITTAJA !"
+                        text = "SINÄ VOITIT ! uusi peli: paina ENTER"
                         game_over = True
-                    text = "  . : I CONNECT FOUR I : ."
+                    text = ". : I CONNECT FOUR I : ."
                     turn = functions.change_turn(turn)
 
                     turn_counter += 1
                     if turn_counter == 21 and is_win is False:
                         game_over = True
-                        text = "Tasapeli - GAME OVER"
+                        text = "TASAPELI - uusi peli: paina ENTER"
 
                 draw_board(board, screen, margin, width, height, text)
 
@@ -87,11 +100,12 @@ def ui_pygame(screen):
                 board[row][column] = 2
                 is_win = functions.check_if_win(board, turn, (row, column))
                 if is_win is True:
-                    text = "AI VOITTI ! GAME OVER"
+                    text = "AI VOITTI ! uusi peli: paina ENTER"
                     game_over = True
             else:
-                text = "Tasapeli - GAME OVER"
                 game_over = True
+                text = "TASAPELI - uusi peli: paina ENTER"
+
             turn = functions.change_turn(turn)
 
             draw_board(board, screen, margin, width, height, text)
