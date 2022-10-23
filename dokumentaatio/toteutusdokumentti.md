@@ -55,7 +55,7 @@ Suorituskykyvertailu- ja testaus ei ollut tälle aiheelle oleellinen.
 
 ### Työn mahdolliset puutteet ja parannusehdotukset
 
-- Minimax algoritmia voisi vielä tehostaa paremmalla heurestiikalla. Esimerkiksi ottamalla mukaan pisteytykset myös 3-rivissä siirroille.
+- Minimax algoritmia voisi vielä tehostaa paremmalla heurestiikkaa.
 - Minimaxissa voisi myös rajata haun syvyyttä ottamalla huomioon yhden syvyyskerroksen keston, ja katkaisemalla minimax sen jälkeen, kun yhden kerroksen suorittaminen kestää esimerkiksi yli 10sek.
 - Käyttöliittymää voisi parantaa antamalla käyttäjälle mahdollisuus valita vaikeustaso.
 
