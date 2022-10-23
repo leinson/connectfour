@@ -82,8 +82,9 @@ def ui_pygame(screen):
                     if is_win is True:
                         text = "SINÄ VOITIT ! uusi peli: paina ENTER"
                         game_over = True
-                    text = ". : I CONNECT FOUR I : ."
-                    turn = functions.change_turn(turn)
+                    else:    
+                        text = ". : I CONNECT FOUR I : ."
+                        turn = functions.change_turn(turn)
 
                     turn_counter += 1
                     if turn_counter == 21 and is_win is False:

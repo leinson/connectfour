@@ -5,6 +5,9 @@ import minimax_a_b
 
 
 class TestMiniMax(unittest.TestCase):
+    """
+    Testejä liittyen minimax-funktion toimintaan.
+    """
     def setUp(self):
         self.board = functions.create_the_board()
 

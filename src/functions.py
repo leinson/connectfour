@@ -18,7 +18,7 @@ def choose_column(column, matrix):
         column (int): Sarake, jonka pelaaja on valinnut
         matrix (np array): pelilauta
     Returns:
-        boolean: True jos sarakkeessa tilaa, False jos sarake täynnä.
+        boolean: ruutu tuplena johon nappula sijoitetaan, False jos sarake täynnä.
     """
     row_counter = 5
     for i in reversed(matrix.T[column]):
@@ -123,6 +123,15 @@ def get_possible_columns(board):
 
 
 def next_empty_row(board, column):
+    """Tarkistaa seuraavan vapaan rivin valitussa sarakkeessa ja palauttaa sen.
+
+    Args:
+        board (array): pelilauta
+        column (int): sarake
+
+    Returns:
+        int: rivi numero
+    """
     for row in range(5, -1, -1):
         if board[row][column] == 0:
             return row
