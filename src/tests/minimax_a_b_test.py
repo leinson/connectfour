@@ -125,6 +125,27 @@ class TestMiniMax(unittest.TestCase):
             board, 6, -10000000000, +100000000000, True)
         self.assertEqual(5, column)
 
+    def test_win_after_two_steps(self):
+        """Tekeekö fiksun siirron joka johtaisi voittoon 2 siirrossa"""
+        board = np.array([[0,0,0,0,0,0,0], 
+                      [0,0,0,1,0,0,0],
+                      [0,0,0,1,0,0,0],
+                      [0,0,0,2,1,0,0],
+                      [0,2,0,2,1,2,0],
+                      [1,1,2,2,2,1,1]])
+        column, minimax_value = minimax_a_b.minimax(board, 6, -10000000000, +100000000000, True)
+        self.assertEqual(2, column)
+    
+    def test_blocking_skill_if_player_win_in_two(self):
+        """"Tekeekö fiksun siirron joka blokkaisi pelaajan voiton 2 siirrossa"""
+        board = np.array([[0,0,0,0,0,0,0], 
+                      [0,0,0,0,0,0,0],
+                      [0,0,0,0,0,0,0],
+                      [0,0,1,0,1,0,1],
+                      [0,2,2,1,1,2,1],
+                      [1,1,2,2,2,1,2]])
+        column, minimax_value = minimax_a_b.minimax(board, 6, -10000000000, +100000000000, True)
+        self.assertEqual(3, column)
 
 class TestMinimaxHelpFunctions(unittest.TestCase):
     """
