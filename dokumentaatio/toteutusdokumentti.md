@@ -40,8 +40,6 @@ Käyttöliittymä on toteutettu pythonin kirjastolla Pygame, ja löytyy tiedosto
 ```
 Yllä oleva kaavio havainnollistaa tiedostojen sisältöä sekä niiden suhdetta toisiinsa. 
 
-Kansio ui sisältää käyttöliittymään liittyviä tiedostoja, ja kansio entities_and_services sisältää sovelluslogiikkaan ja luokkiin liittyviä tiedostoja. Käyttöliittymästä kutsutaan entities_and_services luokan metodeja sovelluslogiikkaan liittyvissä toiminnoissa. 
-
 Ohjelmassa käyttäjä pelaa tietokoneen tekoälyä vastaan, joka on toteutettu minimax algoritmilla jota on tehostettu alpha-beta karsinnalla. Tekoäly hyödyntää kyseistä algoritmia valitsemaan oman siirtonsa, priorisoiden sarakkeita keskeltäpäin. Käyttäjä valitsee itse sarakkeen, johon pudottaa oman nappulansa. Ohjelma tarkistaa jokaisen syötön jälkeen, onko voittoa havaittavissa. Jos voitto todetaan, peli päättyy. 
 
 ### Saavutetut aika- ja tilavaativuudet (m.m. O-analyysit pseudokoodista)
