@@ -12,6 +12,8 @@ Testit ajetaan komennolla `poetry run invoke test`. Tämä komento suorittaa kai
 
 Yksikkötestit ovat tehty Unittest-työkalulla. Tämän avulla on luotu testejä, jotka testaavat tiettyä toiminnallisuutta, tietystä funktiosta, tietyllä syötteellä. Testejä on pyritty tekemään mahdollisimman kattavasti, lisätietoa testikattavuudesta alla. Jokaiselle funktiolle on tehty jokin testi, ja usealle funktioille on tehty monia testejä. Useat testit samasta funktiosta ovat tarpeellisia, kun esimerkiksi saatu syöte muuttaa funktion toimintaa vaikka ehtolausekkeiden kautta. Monia testejä luodessa on testattu myös virheellistä vertailua varmistamaan, että läpi mennyt testi oikeasti tarkoittaa, että testattu toiminnallisuus toimii oikein. 
 
+Minimaxia on testattu tilanteissa, kun seuraavalla vuorolla on mahdollisuus voittoon, sekä tilanteessa, missä voitto olisi mahdollinen kahden siirron päässä. On myös testattu, osaako algoritmi blokata vastustajan tulevaa voittoa kahden siirron päässä.
+
 Testeissä ei olla testattu jokaista erilaista tapaa saada voittoa, koska tämä veisi runsaasti aikaa. Sen sijaan on yritetty monipuolistaa eri testien lautasyötteitä, varioiden riviä ja sarakkeita, missä voitto on. Esimerkiksi kaikki voittotestit eivät ala ruudusta (0,0). Syötteet, joilla testejä on suoritettu, näkyvät yksikkötesteissä.
 
 Testien suorittaminen vie noin 4,5 sekuntia. 
@@ -22,7 +24,7 @@ Testikattavuuden laskemiseen on käytetty Coverage työkalua, joka luo yksikköt
 Testikattavuuden saa suoritettua testien suorittamisen jälkeen komennolla `poetry run coverage-report`. 
 Testauksen haarautumakattavuus on tällä hetkellä 98%. Testikattavuus lasketaan functions.py ja minimax_a_b.py tiedostoista. 
 
-![](./testikattavuus/coveragereport15oct.png)
+![](./testikattavuus/coveragereport24oct.png)
 
 Yllä kuva ajankohtaisesta testikattavuudesta. Viikkottaiset testikattavuusraportit sijaitsevat dokumentaatio-kansion alakansiossa testikattavuus.
 
